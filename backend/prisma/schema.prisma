@@ -1,0 +1,301 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// User model for admin authentication
+model User {
+  id           String     @id @default(cuid())
+  name         String?
+  email        String     @unique
+  password     String
+  profilePhoto String?
+  role         Role       @default(ADMIN)
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+  
+  blogPosts     BlogPost[]      // Relation to blog posts
+  notifications Notification[]  // Relation to notifications
+
+  @@map("users")
+}
+
+enum Role {
+  ADMIN
+  SUPER_ADMIN
+}
+
+// Services model
+model Service {
+  id          String   @id @default(cuid())
+  title       String
+  description String
+  features    String[] // Array of features
+  icon        String?  // Icon name/identifier
+  status      Status   @default(ACTIVE)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("services")
+}
+
+// Projects model
+model Project {
+  id             String   @id @default(cuid())
+  title          String
+  slug           String   @unique
+  category       String
+  description    String
+  shortDescription String?
+  imageUrl       String?
+  galleryImages  String[] // Array of image URLs
+  completionDate DateTime?
+  startDate      DateTime?
+  clientName     String?
+  location       String?
+  budget         Float?
+  projectArea    Float?
+  projectType    String?
+  status         Status   @default(ACTIVE)
+  featured       Boolean  @default(false)
+  priority       Int      @default(0)
+  
+  // SEO Meta Fields
+  metaTitle      String?
+  metaDescription String?
+  metaKeywords   String?
+  
+  // Additional Details
+  technologies   String[] // Technologies/materials used
+  teamMembers    String[] // Team member names
+  challenges     String[] // Project challenges
+  achievements   String[] // Key achievements
+  testimonial    String?  // Client testimonial
+  
+  // Social Media
+  socialImages   String[] // Optimized images for social sharing
+  
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  @@map("projects")
+}
+
+// Blog posts model
+model BlogPost {
+  id             String         @id @default(cuid())
+  slug           String         @unique
+  title          String
+  content        String
+  excerpt        String?
+  authorId       String
+  imageUrl       String?
+  status         PublishStatus  @default(DRAFT)
+  publishedAt    DateTime?
+  featured       Boolean        @default(false)
+  seoTitle       String?
+  seoDescription String?
+  metaKeywords   String?
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
+  
+  author         User           @relation(fields: [authorId], references: [id])
+  categories     PostCategory[]
+
+  @@map("blog_posts")
+}
+
+// Blog categories model
+model BlogCategory {
+  id          String         @id @default(cuid())
+  name        String         @unique
+  slug        String         @unique
+  description String?
+  createdAt   DateTime       @default(now())
+  updatedAt   DateTime       @updatedAt
+  
+  posts       PostCategory[]
+
+  @@map("blog_categories")
+}
+
+// Junction table for blog posts and categories
+model PostCategory {
+  postId     String
+  categoryId String
+  
+  post       BlogPost     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  category   BlogCategory @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+
+  @@id([postId, categoryId])
+  @@map("post_categories")
+}
+
+// Team members model
+model TeamMember {
+  id           String   @id @default(cuid())
+  name         String
+  position     String
+  bio          String?
+  imageUrl     String?
+  email        String?
+  phone        String?
+  linkedin     String?
+  facebook     String?
+  twitter      String?
+  instagram    String?
+  tiktok       String?
+  status       Status   @default(ACTIVE)
+  displayOrder Int      @default(0)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@map("team_members")
+}
+
+// Testimonials model
+model Testimonial {
+  id          String   @id @default(cuid())
+  clientName  String
+  position    String?
+  company     String?
+  content     String
+  imageUrl    String?
+  rating      Int      @default(5)
+  status      Status   @default(ACTIVE)
+  featured    Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("testimonials")
+}
+
+// Company settings model
+model CompanySetting {
+  id          String      @id @default(cuid())
+  key         String      @unique
+  value       String
+  type        SettingType @default(TEXT)
+  description String?
+  updatedAt   DateTime    @updatedAt
+
+  @@map("company_settings")
+}
+
+// Contact form submissions model
+model ContactSubmission {
+  id        String            @id @default(cuid())
+  name      String
+  email     String
+  phone     String?
+  subject   String
+  message   String
+  status    SubmissionStatus  @default(UNREAD)
+  createdAt DateTime          @default(now())
+
+  @@map("contact_submissions")
+}
+
+// Enums
+enum Status {
+  ACTIVE
+  INACTIVE
+}
+
+enum PublishStatus {
+  DRAFT
+  PUBLISHED
+  ARCHIVED
+}
+
+enum SettingType {
+  TEXT
+  NUMBER
+  BOOLEAN
+  JSON
+}
+
+enum SubmissionStatus {
+  UNREAD
+  READ
+  REPLIED
+  ARCHIVED
+}
+
+// Hero Slider model for dynamic hero slides management
+model HeroSlide {
+  id               String      @id @default(cuid())
+  title            String
+  subtitle         String?
+  description      String
+  imageUrl         String
+  imageAlt         String?
+  
+  // Call-to-action buttons (up to 2 buttons)
+  primaryButtonText   String?
+  primaryButtonUrl    String?
+  secondaryButtonText String?
+  secondaryButtonUrl  String?
+  
+  // Display settings
+  status           Status      @default(ACTIVE)
+  displayOrder     Int         @default(0)
+  startDate        DateTime?   // Optional: schedule slide display
+  endDate          DateTime?   // Optional: schedule slide removal
+  
+  // Animation and styling
+  textAlign        String      @default("left") // left, center, right
+  textColor        String      @default("#ffffff") // hex color for text
+  overlayOpacity   Float       @default(0.4) // background overlay opacity
+  
+  // SEO and accessibility
+  seoTitle         String?
+  seoDescription   String?
+  
+  // Analytics
+  views            Int         @default(0)
+  clicks           Int         @default(0)
+  
+  createdAt        DateTime    @default(now())
+  updatedAt        DateTime    @updatedAt
+
+  @@map("hero_slides")
+}
+
+// Notification model for admin notifications
+model Notification {
+  id          String           @id @default(cuid())
+  userId      String           // The admin user who should receive this notification
+  title       String
+  message     String
+  type        NotificationType @default(INFO)
+  category    String?          // e.g., "contact", "project", "blog", "service"
+  isRead      Boolean          @default(false)
+  
+  // Optional action link
+  actionUrl   String?
+  actionLabel String?
+  
+  // Metadata for additional context (JSON field)
+  metadata    Json?
+  
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
+  
+  user        User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  @@index([userId, isRead])
+  @@index([createdAt])
+  @@map("notifications")
+}
+
+enum NotificationType {
+  INFO
+  SUCCESS
+  WARNING
+  ERROR
+}
