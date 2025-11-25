@@ -67,7 +67,7 @@
 ```env
 NODE_ENV=development
 PORT=5000
-DATABASE_URL="postgresql://postgres:admin123@localhost:5432/forever_shine_db"
+DATABASE_URL="postgresql://postgres:password@localhost:5432/furhimalaya"
 JWT_SECRET=your-super-secret-jwt-key-here-change-in-production-2024
 JWT_EXPIRES_IN=7d
 ADMIN_EMAIL=admin@furhimalaya.com
