@@ -37,7 +37,7 @@ export const API_CONFIG = {
     
     // For uploads, they should be served from the API domain
     // Backend returns paths like: /uploads/hero-slides/file.png
-    // We need to serve from: https://api.forevershine.com.np/uploads/hero-slides/file.png
+    // We need to serve from: https://api.furhimalaya.com/uploads/hero-slides/file.png
     if (cleanPath.startsWith('uploads/')) {
       const serverBase = getServerBaseUrl();
       return `${serverBase}/${cleanPath}`;

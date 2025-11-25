@@ -306,15 +306,15 @@ export default function AdminHelpPage() {
       description: 'Get instant help from our support team',
       action: 'Start Chat',
       color: 'bg-emerald-500 hover:bg-emerald-600',
-      link: `mailto:${systemInfo?.developer.supportEmail || 'support@zwickytechnology.com'}`
+      link: `mailto:${systemInfo?.developer.supportEmail || 'support@anayainfotech.com.np'}`
     },
     {
       icon: Mail,
       title: 'Email Support',
-      description: systemInfo?.developer.email || 'info@zwickytechnology.com',
+      description: systemInfo?.developer.email || 'info@anayainfotech.com.np',
       action: 'Send Email',
       color: 'bg-blue-500 hover:bg-blue-600',
-      link: `mailto:${systemInfo?.developer.email || 'info@zwickytechnology.com'}`
+      link: `mailto:${systemInfo?.developer.email || 'info@anayainfotech.com.np'}`
     },
     {
       icon: Phone,
@@ -401,7 +401,7 @@ export default function AdminHelpPage() {
                   <Zap className="w-7 h-7 text-yellow-500 mr-3" />
                   System Features
                 </h2>
-                <p className="text-gray-600 mt-1">Complete feature list of Forever Shine Engineering Admin System</p>
+                <p className="text-gray-600 mt-1">Complete feature list of Fur Himalaya Admin System</p>
               </div>
               <div className="bg-gradient-to-r from-blue-500 to-purple-500 text-white px-4 py-2 rounded-full text-sm font-semibold">
                 {systemFeatures.reduce((acc, cat) => acc + cat.features.length, 0)}+ Features

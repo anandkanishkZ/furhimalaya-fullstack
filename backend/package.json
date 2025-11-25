@@ -1,7 +1,7 @@
 {
   "name": "forever-shine-backend",
   "version": "1.0.0",
-  "description": "Backend API for Forever Shine Engineering website",
+  "description": "Backend API for Fur Himalaya website",
   "main": "dist/server.js",
   "scripts": {
     "dev": "nodemon src/server.ts",

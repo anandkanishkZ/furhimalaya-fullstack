@@ -168,7 +168,7 @@ export default function AdminProjectsAdvanced() {
       ...prev,
       title,
       slug: generateSlug(title),
-      metaTitle: title ? `${title} | Forever Shine Engineering` : ''
+      metaTitle: title ? `${title} | Fur Himalaya` : ''
     }));
   };
 

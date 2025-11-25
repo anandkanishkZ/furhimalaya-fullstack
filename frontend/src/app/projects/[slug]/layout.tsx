@@ -85,7 +85,7 @@ export async function generateMetadata({ params }: { params: { slug: string } })
 
   // Fallback metadata
   return {
-    title: 'Project Not Found | Forever Shine Engineering',
+    title: 'Collection Not Found | Fur Himalaya',
     description: 'The requested project could not be found. Explore our other engineering projects and construction services.',
     openGraph: {
       title: 'Collection Not Found | Fur Himalaya',

@@ -23,20 +23,20 @@ export async function generateMetadata({ params }: ProjectPageProps): Promise<Me
 
       if (project) {
         return {
-          title: `${project.title} | Forever Shine Engineering Projects`,
+          title: `${project.title} | Fur Himalaya Projects`,
           description: project.description,
           keywords: [
             project.category.toLowerCase(),
             'engineering project',
             'construction',
-            'forever shine engineering',
+            'fur himalaya',
             project.clientName || '',
           ].filter(Boolean).join(', '),
           openGraph: {
             title: project.title,
             description: project.description,
             url: `/projects/${params.slug}`,
-            siteName: 'Forever Shine Engineering',
+            siteName: 'Fur Himalaya',
             images: project.imageUrl ? [
               {
                 url: project.imageUrl,
@@ -66,7 +66,7 @@ export async function generateMetadata({ params }: ProjectPageProps): Promise<Me
 
   // Fallback metadata
   return {
-    title: 'Project Not Found | Forever Shine Engineering',
+    title: 'Project Not Found | Fur Himalaya',
     description: 'The requested project could not be found.',
   };
 }

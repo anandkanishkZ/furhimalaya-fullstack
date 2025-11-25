@@ -1,7 +1,7 @@
 module.exports = {
   apps: [
     {
-      name: 'forevershine-backend',
+      name: 'furhimalaya-backend',
       script: './dist/server.js',
       cwd: './backend',
       instances: 1,
@@ -20,7 +20,7 @@ module.exports = {
       exp_backoff_restart_delay: 100
     },
     {
-      name: 'forevershine-frontend',
+      name: 'furhimalaya-frontend',
       script: 'node_modules/next/dist/bin/next',
       args: 'start -p 3000',
       cwd: './frontend',

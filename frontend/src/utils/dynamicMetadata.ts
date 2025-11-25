@@ -76,7 +76,7 @@ export async function generateDynamicMetadata(params?: MetadataParams) {
       },
       twitter: {
         card: 'summary_large_image',
-        site: settings?.social_twitter || '@forevershine',
+        site: settings?.social_twitter || '@furhimalaya',
         creator: settings?.social_twitter || '@furhimalaya',
         title: finalTitle,
         description: finalDescription,

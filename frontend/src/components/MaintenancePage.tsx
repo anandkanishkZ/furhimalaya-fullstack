@@ -8,8 +8,8 @@ import { API_CONFIG } from '@/config/api';
 
 export default function MaintenancePage() {
   // Dynamic content from settings
-  const companyName = useSetting('company_name', 'Forever Shine Engineering');
-  const companyEmail = useSetting('company_email', 'info@forevershine.com.np');
+  const companyName = useSetting('company_name', 'Furhimalaya');
+  const companyEmail = useSetting('company_email', 'hello@furhimalaya.com');
   const companyPhone = useSetting('company_phone', '+977 9805996059');
   const siteLogo = useSetting('site_logo', '');
   const ogImage = useSetting('seo_og_image', '');
@@ -93,7 +93,7 @@ export default function MaintenancePage() {
             © {new Date().getFullYear()} {companyName}. All rights reserved.
           </p>
           <p className="text-xs text-gray-400 mt-1">
-            Developed by <a href="https://zwickytechnology.com" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:text-blue-600 transition-colors">Zwicky Technology</a>
+            Developed by <a href="https://anayainfotech.com.np" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:text-blue-600 transition-colors">Anaya InfoTech</a>
           </p>
         </div>
       </div>

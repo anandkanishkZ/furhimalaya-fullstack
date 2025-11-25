@@ -1,12 +1,12 @@
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Engineering Projects Portfolio | Forever Shine Engineering',
+  title: 'Pashmina Collection | Fur Himalaya',
   description: 'Explore our comprehensive portfolio of engineering and construction projects. From residential buildings to commercial complexes, discover our expertise in delivering quality infrastructure solutions.',
   keywords: 'luxury pashmina, heritage collections, authentic craftsmanship, himalayan textiles, luxury fashion, artisan collections, fur himalaya',
   authors: [{ name: 'Fur Himalaya' }],
   openGraph: {
-    title: 'Engineering Projects Portfolio | Forever Shine Engineering',
+    title: 'Pashmina Collection | Fur Himalaya',
     description: 'Explore our comprehensive portfolio of engineering and construction projects. From residential buildings to commercial complexes, discover our expertise in delivering quality infrastructure solutions.',
     url: '/projects',
     siteName: 'Fur Himalaya',
@@ -15,9 +15,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Engineering Projects Portfolio | Forever Shine Engineering',
+    title: 'Pashmina Collection | Fur Himalaya',
     description: 'Explore our comprehensive portfolio of engineering and construction projects.',
-    creator: '@ForeverShineEng'
+    creator: '@FurHimalaya'
   },
   alternates: {
     canonical: '/projects',

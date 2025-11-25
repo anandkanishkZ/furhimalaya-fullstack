@@ -2,7 +2,7 @@
   "name": "forever-shine-frontend",
   "private": true,
   "version": "0.1.0",
-  "description": "Frontend for Forever Shine Engineering website built with Next.js",
+  "description": "Frontend for Fur Himalaya website built with Next.js",
   "scripts": {
     "dev": "next dev",
     "build": "next build",

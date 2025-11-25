@@ -411,11 +411,11 @@ router.get('/info', systemLimiter, securityAccessLogger, requireSuperAdmin, asyn
 
       // Developer Information
       developer: {
-        company: 'Zwicky Technology',
+        company: 'Anaya InfoTech',
         phone: '+977 9825733821',
-        email: 'info@zwickytechnology.com',
-        website: 'www.zwickytechnology.com',
-        supportEmail: 'support@zwickytechnology.com',
+        email: 'info@anayainfotech.com.np',
+        website: 'www.anayainfotech.com.np',
+        supportEmail: 'support@anayainfotech.com.np',
       },
 
       // Timestamps
@@ -453,7 +453,7 @@ router.get('/health', async (req, res: Response<ApiResponse>) => {
       data: {
         status: 'healthy',
         timestamp: new Date().toISOString(),
-        service: process.env.SERVICE_NAME || 'Forever Shine API'
+        service: process.env.SERVICE_NAME || 'Fur Himalaya API'
       }
     });
   } catch (error) {

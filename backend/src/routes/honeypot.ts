@@ -32,7 +32,7 @@ router.all('/admin*', apiDiscoveryLimiter, (req: Request, res: Response) => {
     <!DOCTYPE html>
     <html>
     <head>
-        <title>Forever Shine - Admin Login</title>
+        <title>Fur Himalaya - Admin Login</title>
         <style>
             body { font-family: Arial, sans-serif; background: #f5f5f5; }
             .login-container { max-width: 400px; margin: 100px auto; background: white; padding: 40px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
@@ -47,7 +47,7 @@ router.all('/admin*', apiDiscoveryLimiter, (req: Request, res: Response) => {
     <body>
         <div class="login-container">
             <div class="logo">
-                <h2>Forever Shine Engineering</h2>
+                <h2>Fur Himalaya</h2>
                 <p>Admin Panel Access</p>
             </div>
             <form>
@@ -72,7 +72,7 @@ router.all('/docs*', apiDiscoveryLimiter, (req: Request, res: Response) => {
   logHoneypotActivity(req, '/docs', 'API_DOCS_PROBE');
   
   res.status(200).json({
-    name: 'Forever Shine Engineering API',
+    name: 'Fur Himalaya API',
     version: '1.0.0',
     description: 'Professional Engineering Services API',
     documentation: 'Contact administrator for API access',

@@ -54,7 +54,7 @@ export default function AdminLogin() {
             </div>
             <h2 className="text-3xl font-bold text-gray-900">Admin Login</h2>
             <p className="text-gray-600 mt-2">
-              Sign in to Forever Shine Engineering Admin Panel
+              Sign in to Fur Himalaya Admin Panel
             </p>
           </div>
 
@@ -83,7 +83,7 @@ export default function AdminLogin() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   className="w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                  placeholder="admin@forevershine.com.np"
+                  placeholder="admin@furhimalaya.com"
                 />
               </div>
             </div>
@@ -142,7 +142,7 @@ export default function AdminLogin() {
         {/* Footer */}
         <div className="text-center">
           <p className="text-sm text-gray-500">
-            © 2024 Forever Shine Engineering. All rights reserved.
+            © 2024 Fur Himalaya. All rights reserved.
           </p>
         </div>
       </div>

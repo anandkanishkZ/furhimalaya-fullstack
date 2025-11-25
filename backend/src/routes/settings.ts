@@ -186,7 +186,7 @@ router.post('/initialize', authenticate, authorize(['SUPER_ADMIN']), async (req:
   try {
     const defaultSettings = [
       // Company Information
-      { key: 'company_name', value: 'Forever Shine', type: SettingType.TEXT, description: 'Company name displayed across the website' },
+      { key: 'company_name', value: 'Furhimalaya', type: SettingType.TEXT, description: 'Company name displayed across the website' },
       { key: 'company_tagline', value: 'Building Tomorrow Today', type: SettingType.TEXT, description: 'Company tagline or slogan' },
       { key: 'company_description', value: 'Leading engineering solutions provider', type: SettingType.TEXT, description: 'Brief company description' },
       { key: 'company_address', value: '', type: SettingType.TEXT, description: 'Physical business address' },
@@ -202,7 +202,7 @@ router.post('/initialize', authenticate, authorize(['SUPER_ADMIN']), async (req:
       { key: 'social_youtube', value: '', type: SettingType.TEXT, description: 'YouTube channel URL' },
       
       // SEO Settings
-      { key: 'seo_meta_title', value: 'Forever Shine - Engineering Excellence', type: SettingType.TEXT, description: 'Default meta title for pages' },
+      { key: 'seo_meta_title', value: 'Fur Himalaya - Authentic Himalayan Pashmina', type: SettingType.TEXT, description: 'Default meta title for pages' },
       { key: 'seo_meta_description', value: 'Professional engineering services and solutions', type: SettingType.TEXT, description: 'Default meta description' },
       { key: 'seo_keywords', value: 'engineering, construction, architecture, design', type: SettingType.TEXT, description: 'Default SEO keywords' },
       { key: 'seo_og_image', value: '', type: SettingType.TEXT, description: 'Default Open Graph image URL' },

@@ -3,7 +3,7 @@ import publicApiClient from '@/utils/publicApiClient';
 import BlogApiClient from '@/utils/blogApiClient';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://forevershine.com.np';
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://furhimalaya.com';
 
   // Static pages
   const staticPages = [

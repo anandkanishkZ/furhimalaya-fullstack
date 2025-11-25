@@ -1,6 +1,6 @@
-# Forever Shine Engineering - Full Stack Project
+# Fur Himalaya - Full Stack Project
 
-A complete web application for Forever Shine Engineering company, featuring a modern Next.js frontend and robust Express.js backend.
+A complete web application for Fur Himalaya, featuring a modern Next.js frontend and robust Express.js backend.
 
 ## 🚀 Production Deployment - Complete CI/CD Setup
 
@@ -172,7 +172,7 @@ NEXT_PUBLIC_SITE_URL=http://localhost:3000
 
 ### Backend (`.env`)
 ```env
-DATABASE_URL="postgresql://username:password@localhost:5432/forever_shine"
+DATABASE_URL="postgresql://username:password@localhost:5432/furhimalaya"
 JWT_SECRET="your-super-secret-jwt-key"
 PORT=5000
 NODE_ENV=development
@@ -229,10 +229,10 @@ npm run type-check
 ## 📞 Support
 
 For support and questions:
-- **Email**: support@forevershine.com.np
+- **Email**: support@furhimalaya.com
 - **Documentation**: Check individual README files in frontend/ and backend/
 - **Issues**: Create GitHub issues for bug reports
 
 ## 📄 License
 
-This project is proprietary and confidential to Forever Shine Engineering.
+This project is proprietary and confidential to Fur Himalaya.

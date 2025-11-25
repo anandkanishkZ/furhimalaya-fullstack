@@ -38,33 +38,33 @@ const nextConfig = {
       // Production - API domain (backend uploads)
       {
         protocol: 'https',
-        hostname: 'api.forevershine.com.np',
+        hostname: 'api.furhimalaya.com',
         pathname: '/uploads/**',
       },
       {
         protocol: 'https',
-        hostname: 'api.forevershine.com.np',
+        hostname: 'api.furhimalaya.com',
         pathname: '/api/**',
       },
       // Production - Main domain
       {
         protocol: 'https',
-        hostname: 'forevershine.com.np',
+        hostname: 'furhimalaya.com',
         pathname: '/uploads/**',
       },
       {
         protocol: 'https',
-        hostname: 'forevershine.com.np',
+        hostname: 'furhimalaya.com',
         pathname: '/api/media/serve/**',
       },
       {
         protocol: 'https',
-        hostname: 'www.forevershine.com.np',
+        hostname: 'www.furhimalaya.com',
         pathname: '/uploads/**',
       },
       {
         protocol: 'https',
-        hostname: 'www.forevershine.com.np',
+        hostname: 'www.furhimalaya.com',
         pathname: '/api/media/serve/**',
       },
     ],
