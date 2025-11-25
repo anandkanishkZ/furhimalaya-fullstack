@@ -13,7 +13,8 @@ import {
   Sliders,
   FileText,
   Star,
-  Mail
+  Mail,
+  Building
 } from 'lucide-react';
 
 interface DashboardStats {
@@ -24,6 +25,7 @@ interface DashboardStats {
   contactMessages: number;
   blogPosts: number;
   heroSlides: number;
+  clients: number;
 }
 
 export default function AdminDashboard() {
@@ -35,21 +37,23 @@ export default function AdminDashboard() {
     testimonials: 0,
     contactMessages: 0,
     blogPosts: 0,
-    heroSlides: 0
+    heroSlides: 0,
+    clients: 0
   });
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchStats = async () => {
       try {
-        const [servicesRes, projectsRes, contactRes, teamRes, testimonialsRes, blogRes, heroRes] = await Promise.all([
+        const [servicesRes, projectsRes, contactRes, teamRes, testimonialsRes, blogRes, heroRes, clientsRes] = await Promise.all([
           apiClient.getServices(),
           apiClient.getProjects(),
           apiClient.getContactSubmissions(),
           apiClient.getTeamMembers(),
           apiClient.getTestimonials(),
           apiClient.getBlogPosts(),
-          apiClient.getHeroSlides()
+          apiClient.getHeroSlides(),
+          apiClient.getClients()
         ]);
 
         setStats({
@@ -59,7 +63,8 @@ export default function AdminDashboard() {
           testimonials: testimonialsRes.data?.length || 0,
           contactMessages: contactRes.data?.length || 0,
           blogPosts: blogRes.data?.length || 0,
-          heroSlides: heroRes.data?.length || 0
+          heroSlides: heroRes.data?.length || 0,
+          clients: clientsRes.data?.length || 0
         });
       } catch (error) {
         console.error('Failed to fetch stats:', error);
@@ -73,21 +78,24 @@ export default function AdminDashboard() {
 
   const statsCards = [
     { name: 'Total', subtitle: 'Services', value: stats.services, icon: Wrench, color: 'from-blue-500 to-blue-600', badge: 'Active', badgeColor: 'bg-blue-100 text-blue-800', href: '/admin/services' },
+    { name: 'Our', subtitle: 'Clients', value: stats.clients, icon: Building, color: 'from-teal-500 to-teal-600', badge: 'Partners', badgeColor: 'bg-teal-100 text-teal-800', href: '/admin/clients' },
     { name: 'Active', subtitle: 'Projects', value: stats.projects, icon: FolderOpen, color: 'from-green-500 to-green-600', badge: 'Live', badgeColor: 'bg-green-100 text-green-800', href: '/admin/projects' },
     { name: 'Team', subtitle: 'Members', value: stats.teamMembers, icon: Users, color: 'from-purple-500 to-purple-600', badge: 'Team', badgeColor: 'bg-purple-100 text-purple-800', href: '/admin/team' },
     { name: 'Contact', subtitle: 'Messages', value: stats.contactMessages, icon: Mail, color: 'from-indigo-500 to-indigo-600', badge: 'Inbox', badgeColor: 'bg-orange-100 text-orange-800', href: '/admin/contact' },
   ];
 
   const quickActions = [
+    { name: 'Add Client', description: 'Add new client/partner', icon: Building, color: 'from-teal-500 to-teal-600', hoverColor: 'hover:border-teal-300 hover:bg-teal-50', onClick: () => router.push('/admin/clients') },
     { name: 'Add Service', description: 'Create new service', icon: Wrench, color: 'from-blue-500 to-blue-600', hoverColor: 'hover:border-blue-300 hover:bg-blue-50', onClick: () => router.push('/admin/services') },
     { name: 'New Project', description: 'Add portfolio item', icon: FolderOpen, color: 'from-green-500 to-green-600', hoverColor: 'hover:border-green-300 hover:bg-green-50', onClick: () => router.push('/admin/projects') },
     { name: 'Write Blog', description: 'Create article', icon: FileText, color: 'from-purple-500 to-purple-600', hoverColor: 'hover:border-purple-300 hover:bg-purple-50', onClick: () => router.push('/admin/blog') },
     { name: 'Add Member', description: 'Invite team member', icon: Users, color: 'from-orange-500 to-orange-600', hoverColor: 'hover:border-orange-300 hover:bg-orange-50', onClick: () => router.push('/admin/team') },
     { name: 'Hero Slide', description: 'Add homepage slide', icon: Sliders, color: 'from-pink-500 to-pink-600', hoverColor: 'hover:border-pink-300 hover:bg-pink-50', onClick: () => router.push('/admin/hero-slides') },
-    { name: 'Media Upload', description: 'Add images/files', icon: Image, color: 'from-teal-500 to-teal-600', hoverColor: 'hover:border-teal-300 hover:bg-teal-50', onClick: () => router.push('/admin/media') },
+    { name: 'Media Upload', description: 'Add images/files', icon: Image, color: 'from-indigo-500 to-indigo-600', hoverColor: 'hover:border-indigo-300 hover:bg-indigo-50', onClick: () => router.push('/admin/media') },
   ];
 
   const contentOverview = [
+    { name: 'Our Clients', count: stats.clients, icon: Building, color: 'from-teal-500 to-teal-600', href: '/admin/clients' },
     { name: 'Hero Slides', count: stats.heroSlides, icon: Sliders, color: 'from-pink-500 to-pink-600', href: '/admin/hero-slides' },
     { name: 'Blog Posts', count: stats.blogPosts, icon: FileText, color: 'from-purple-500 to-purple-600', href: '/admin/blog' },
     { name: 'Testimonials', count: stats.testimonials, icon: Star, color: 'from-yellow-500 to-yellow-600', href: '/admin/testimonials' },

@@ -299,3 +299,29 @@ enum NotificationType {
   WARNING
   ERROR
 }
+
+// Clients model for managing company clients/partners
+model Client {
+  id           String   @id @default(cuid())
+  name         String
+  description  String?
+  website      String?
+  logoUrl      String?
+  category     String?  // e.g., "Banking", "Technology", "Healthcare", etc.
+  contactEmail String?
+  contactPhone String?
+  
+  // Display settings
+  status       Status   @default(ACTIVE)
+  featured     Boolean  @default(false)
+  displayOrder Int      @default(0)
+  
+  // Metadata
+  startDate    DateTime? // When partnership started
+  endDate      DateTime? // If partnership ended
+  
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@map("clients")
+}

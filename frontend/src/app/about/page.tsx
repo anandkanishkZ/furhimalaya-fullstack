@@ -25,6 +25,7 @@ import SectionTitle from '@/components/SectionTitle';
 import Button from '@/components/Button';
 import SocialMediaLinks from '@/components/SocialMediaLinks';
 import BrandColorShowcase from '@/components/BrandColorShowcase';
+import ClientCarousel from '@/components/ClientCarousel';
 import Image from 'next/image';
 import publicApiClient, { TeamMember } from '@/utils/publicApiClient';
 import { useSetting } from '@/hooks/useSiteSettings';
@@ -86,7 +87,7 @@ const About = () => {
 
   useEffect(() => {
     setMounted(true);
-    fetchTeamMembers();
+    fetchData();
   }, []);
 
   const fetchTeamMembers = async () => {
@@ -97,6 +98,17 @@ const About = () => {
       }
     } catch (error) {
       console.error('Failed to fetch team members:', error);
+    }
+  };
+
+
+
+  const fetchData = async () => {
+    setLoading(true);
+    try {
+      await fetchTeamMembers();
+    } catch (error) {
+      console.error('Failed to fetch data:', error);
     } finally {
       setLoading(false);
     }
@@ -531,125 +543,12 @@ const About = () => {
         </div>
       </section>
 
-      {/* Banking Partners Section */}
-      <section className="py-12 sm:py-16 md:py-20 bg-gray-50">
-        <div className="container mx-auto px-4 sm:px-6">
-          <SectionTitle
-            title="Banking Partners"
-            subtitle="Trusted by leading financial institutions"
-            center={true}
-          />
-          
-          <div className="mt-8 sm:mt-12">
-            {/* Logo Carousel */}
-            <div className="relative max-w-6xl mx-auto">
-              <div className="overflow-hidden rounded-xl sm:rounded-2xl bg-white shadow-xl p-6 sm:p-8 md:p-12">
-                <div className="flex items-center justify-center space-x-8 sm:space-x-12 md:space-x-16 animate-carousel">
-                  {/* First set of logos */}
-                  <div className="flex items-center justify-center space-x-8 sm:space-x-12 md:space-x-16 min-w-full">
-                    <a 
-                      href="https://everestbankltd.com/" 
-                      target="_blank" 
-                      rel="noopener noreferrer"
-                      className="flex-shrink-0 w-20 h-20 sm:w-28 sm:h-28 md:w-32 md:h-32 flex items-center justify-center hover:scale-110 transition-all duration-300 cursor-pointer"
-                    >
-                      <Image
-                        src="/images/banks/everest-bank.svg"
-                        alt="Everest Bank Limited"
-                        width={220}
-                        height={220}
-                        className="max-w-full max-h-full object-contain filter drop-shadow-md"
-                      />
-                    </a>
-                    
-                    <a 
-                      href="https://jbbl.com.np/" 
-                      target="_blank" 
-                      rel="noopener noreferrer"
-                      className="flex-shrink-0 w-20 h-20 sm:w-28 sm:h-28 md:w-32 md:h-32 flex items-center justify-center hover:scale-110 transition-all duration-300 cursor-pointer"
-                    >
-                      <Image
-                        src="/images/banks/jyoti-bikas-bank.png"
-                        alt="Jyoti Bikas Bank Limited"
-                        width={220}
-                        height={220}
-                        className="max-w-full max-h-full object-contain filter drop-shadow-md"
-                      />
-                    </a>
-                    
-                    <a 
-                      href="https://www.nefscun.org.np/" 
-                      target="_blank" 
-                      rel="noopener noreferrer"
-                      className="flex-shrink-0 w-20 h-20 sm:w-28 sm:h-28 md:w-32 md:h-32 flex items-center justify-center hover:scale-110 transition-all duration-300 cursor-pointer"
-                    >
-                      <Image
-                        src="/images/banks/nefscun.jpg"
-                        alt="Nepal Federation of Savings and Credit Cooperative Unions Ltd."
-                        width={220}
-                        height={220}
-                        className="max-w-full max-h-full object-contain filter drop-shadow-md"
-                      />
-                    </a>
-                  </div>
-                  
-                  {/* Duplicate set for seamless loop */}
-                  <div className="flex items-center justify-center space-x-8 sm:space-x-12 md:space-x-16 min-w-full">
-                    <a 
-                      href="https://everestbankltd.com/" 
-                      target="_blank" 
-                      rel="noopener noreferrer"
-                      className="flex-shrink-0 w-20 h-20 sm:w-28 sm:h-28 md:w-32 md:h-32 flex items-center justify-center hover:scale-110 transition-all duration-300 cursor-pointer"
-                    >
-                      <Image
-                        src="/images/banks/everest-bank.svg"
-                        alt="Everest Bank Limited"
-                        width={220}
-                        height={220}
-                        className="max-w-full max-h-full object-contain filter drop-shadow-md"
-                      />
-                    </a>
-                    
-                    <a 
-                      href="https://jbbl.com.np/" 
-                      target="_blank" 
-                      rel="noopener noreferrer"
-                      className="flex-shrink-0 w-20 h-20 sm:w-28 sm:h-28 md:w-32 md:h-32 flex items-center justify-center hover:scale-110 transition-all duration-300 cursor-pointer"
-                    >
-                      <Image
-                        src="/images/banks/jyoti-bikas-bank.png"
-                        alt="Jyoti Bikas Bank Limited"
-                        width={220}
-                        height={220}
-                        className="max-w-full max-h-full object-contain filter drop-shadow-md"
-                      />
-                    </a>
-                    
-                    <a 
-                      href="https://www.nefscun.org.np/" 
-                      target="_blank" 
-                      rel="noopener noreferrer"
-                      className="flex-shrink-0 w-20 h-20 sm:w-28 sm:h-28 md:w-32 md:h-32 flex items-center justify-center hover:scale-110 transition-all duration-300 cursor-pointer"
-                    >
-                      <Image
-                        src="/images/banks/nefscun.jpg"
-                        alt="Nepal Federation of Savings and Credit Cooperative Unions Ltd."
-                        width={220}
-                        height={220}
-                        className="max-w-full max-h-full object-contain filter drop-shadow-md"
-                      />
-                    </a>
-                  </div>
-                </div>
-              </div>
-              
-              {/* Subtle gradient overlays for fade effect */}
-              <div className="absolute top-0 left-0 w-16 sm:w-24 md:w-32 h-full bg-gradient-to-r from-gray-50 to-transparent pointer-events-none z-10"></div>
-              <div className="absolute top-0 right-0 w-16 sm:w-24 md:w-32 h-full bg-gradient-to-l from-gray-50 to-transparent pointer-events-none z-10"></div>
-            </div>
-          </div>
-        </div>
-      </section>
+      {/* Our Clients Section */}
+      <ClientCarousel 
+        title="Our Clients"
+        subtitle="Trusted partnerships that drive mutual success"
+        backgroundStyle="light"
+      />
 
       {/* Meet Our Team Section */}
       <section className="py-12 sm:py-16 md:py-20 bg-white">

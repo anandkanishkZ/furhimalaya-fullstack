@@ -7,8 +7,8 @@ import rateLimit from 'express-rate-limit';
 
 // General API rate limiter - applied to all API routes
 export const apiLimiter = rateLimit({
-  windowMs: parseInt(process.env.RATE_LIMIT_WINDOW_MS || '900000'), // 15 minutes default
-  max: parseInt(process.env.RATE_LIMIT_MAX_REQUESTS || '100'), // 100 requests per window
+  windowMs: parseInt(process.env.RATE_LIMIT_WINDOW_MS || (process.env.NODE_ENV === 'development' ? '60000' : '900000')), // 1 minute in dev, 15 minutes in prod
+  max: parseInt(process.env.RATE_LIMIT_MAX_REQUESTS || (process.env.NODE_ENV === 'development' ? '10000' : '100')), // 10000 requests per window in dev, 100 in prod
   message: {
     success: false,
     message: 'Too many requests from this IP, please try again later.',
@@ -17,15 +17,15 @@ export const apiLimiter = rateLimit({
   standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
   legacyHeaders: false, // Disable the `X-RateLimit-*` headers
   skip: (req) => {
-    // Skip rate limiting for health check endpoint
-    return req.path === '/api/health';
+    // Skip rate limiting for health check endpoint or in development
+    return req.path === '/api/health' || process.env.NODE_ENV === 'development';
   }
 });
 
 // Strict rate limiter for authentication endpoints
 export const authLimiter = rateLimit({
-  windowMs: parseInt(process.env.AUTH_RATE_LIMIT_WINDOW_MS || '900000'), // 15 minutes default
-  max: parseInt(process.env.AUTH_RATE_LIMIT_MAX_ATTEMPTS || '5'), // 5 attempts per window
+  windowMs: parseInt(process.env.AUTH_RATE_LIMIT_WINDOW_MS || (process.env.NODE_ENV === 'development' ? '60000' : '900000')), // 1 minute in dev, 15 minutes in prod
+  max: parseInt(process.env.AUTH_RATE_LIMIT_MAX_ATTEMPTS || (process.env.NODE_ENV === 'development' ? '1000' : '5')), // 1000 attempts per window in dev, 5 in prod
   skipSuccessfulRequests: true, // Don't count successful requests
   message: {
     success: false,
@@ -34,6 +34,10 @@ export const authLimiter = rateLimit({
   },
   standardHeaders: true,
   legacyHeaders: false,
+  skip: (req) => {
+    // Skip rate limiting in development
+    return process.env.NODE_ENV === 'development';
+  }
 });
 
 // Rate limiter for contact form to prevent spam
@@ -47,6 +51,10 @@ export const contactLimiter = rateLimit({
   },
   standardHeaders: true,
   legacyHeaders: false,
+  skip: (req) => {
+    // Skip rate limiting in development
+    return process.env.NODE_ENV === 'development';
+  }
 });
 
 // Extremely restrictive rate limiter for system endpoints
@@ -61,6 +69,10 @@ export const systemLimiter = rateLimit({
   standardHeaders: false, // Don't reveal rate limit info for security
   legacyHeaders: false,
   skipFailedRequests: false, // Count all requests
+  skip: (req) => {
+    // Skip rate limiting in development
+    return process.env.NODE_ENV === 'development';
+  }
 });
 
 // API discovery prevention rate limiter
@@ -74,6 +86,10 @@ export const apiDiscoveryLimiter = rateLimit({
   },
   standardHeaders: false,
   legacyHeaders: false,
+  skip: (req) => {
+    // Skip rate limiting in development
+    return process.env.NODE_ENV === 'development';
+  }
 });
 
 // Rate limiter for file uploads
@@ -87,6 +103,10 @@ export const uploadLimiter = rateLimit({
   },
   standardHeaders: true,
   legacyHeaders: false,
+  skip: (req) => {
+    // Skip rate limiting in development
+    return process.env.NODE_ENV === 'development';
+  }
 });
 
 // Rate limiter for password reset/change operations
@@ -100,6 +120,10 @@ export const passwordLimiter = rateLimit({
   },
   standardHeaders: true,
   legacyHeaders: false,
+  skip: (req) => {
+    // Skip rate limiting in development
+    return process.env.NODE_ENV === 'development';
+  }
 });
 
 // Rate limiter for public read endpoints (less strict)
@@ -113,4 +137,8 @@ export const publicLimiter = rateLimit({
   },
   standardHeaders: true,
   legacyHeaders: false,
+  skip: (req) => {
+    // Skip rate limiting in development
+    return process.env.NODE_ENV === 'development';
+  }
 });

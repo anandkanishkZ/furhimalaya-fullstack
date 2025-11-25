@@ -21,8 +21,7 @@ import {
   ChevronDown,
   ExternalLink,
   Heart,
-  Sparkles,
-  Thread
+  Sparkles
 } from 'lucide-react';
 
 const Projects = () => {
@@ -45,7 +44,7 @@ const Projects = () => {
   // Available categories with luxury fashion icons
   const categories = [
     { id: 'all', name: 'All Collections', icon: Sparkles },
-    { id: 'Premium Pashmina', name: 'Premium Pashmina', icon: Thread },
+    { id: 'Premium Pashmina', name: 'Premium Pashmina', icon: Scissors },
     { id: 'Luxury Shawls', name: 'Luxury Shawls', icon: Palette },
     { id: 'Heritage Collection', name: 'Heritage Collection', icon: Mountain },
     { id: 'Bridal Collection', name: 'Bridal Collection', icon: Heart },
@@ -231,7 +230,7 @@ const Projects = () => {
       <section className="relative py-32 bg-gradient-to-br from-brand-primary-800 to-brand-primary-900 overflow-hidden">
         <div className="absolute inset-0 z-0 opacity-10">
           <Image
-            src="/images/hero-background.jpg"
+            src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&h=400&fit=crop&crop=center"
             alt="Furhimalaya Heritage Crafts"
             className="w-full h-full object-cover"
             width={2000}
@@ -543,7 +542,7 @@ const Projects = () => {
                           />
                         ) : (
                           <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-brand-primary-100 to-brand-primary-200">
-                            <Thread className="w-16 h-16 text-brand-primary-400" />
+                            <Scissors className="w-16 h-16 text-brand-primary-400" />
                           </div>
                         )}
                         

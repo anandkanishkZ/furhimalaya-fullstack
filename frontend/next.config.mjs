@@ -15,8 +15,13 @@ const nextConfig = {
     deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
     minimumCacheTTL: 2592000, // 30 days cache
-    domains: ['images.unsplash.com', 'localhost', 'forevershine.com.np', 'www.forevershine.com.np', 'api.forevershine.com.np'],
     remotePatterns: [
+      // External images - Unsplash
+      {
+        protocol: 'https',
+        hostname: 'images.unsplash.com',
+        pathname: '/**',
+      },
       // Development - localhost
       {
         protocol: 'http',

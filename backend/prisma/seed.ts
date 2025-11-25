@@ -114,8 +114,8 @@ const sampleProjects = [
     budget: 125000.00,
     projectArea: null,
     projectType: 'Bespoke Collection',
-    imageUrl: '/images/projects/royal-kashmir-collection.jpg',
-    galleryImages: ['/images/projects/kashmir-collection-1.jpg', '/images/projects/kashmir-collection-2.jpg'],
+    imageUrl: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+    galleryImages: ['https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'],
     technologies: ['Traditional Hand-spinning', 'Natural Indigo Dyeing', 'Heritage Weaving Patterns'],
     teamMembers: ['Master Weaver Tenzin Norbu', 'Artisan Pema Dolkar', 'Designer Karma Lhamo'],
     challenges: ['Sourcing authentic materials', 'Preserving traditional patterns', 'Meeting luxury standards'],
@@ -134,7 +134,7 @@ const sampleProjects = [
     description: 'Contemporary scarf designs inspired by ancient Himalayan patterns, featuring sustainable production methods and fair trade practices.',
     clientName: 'Boutique Luxury, Paris',
     completionDate: new Date('2024-08-30'),
-    imageUrl: '/images/projects/heritage-scarves.jpg',
+    imageUrl: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
     status: 'ACTIVE' as const,
     featured: true
   },
@@ -145,7 +145,7 @@ const sampleProjects = [
     description: 'Bespoke bridal Pashmina ensemble featuring hand-embroidered gold threads and traditional Tibetan blessing motifs.',
     clientName: 'Royal Wedding, Bhutan',
     completionDate: new Date('2024-06-20'),
-    imageUrl: '/images/projects/bridal-ensemble.jpg',
+    imageUrl: 'https://images.unsplash.com/photo-1559827260-dc66d52bef19?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
     status: 'ACTIVE' as const,
     featured: true
   },
@@ -156,7 +156,7 @@ const sampleProjects = [
     description: 'Premium Pashmina gift sets for international business relations, featuring custom packaging and company branding.',
     clientName: 'Fortune 500 Company',
     completionDate: new Date('2024-11-10'),
-    imageUrl: '/images/projects/corporate-gifts.jpg',
+    imageUrl: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
     status: 'ACTIVE' as const,
     featured: false
   },
@@ -167,7 +167,7 @@ const sampleProjects = [
     description: 'Restoration and authentication of 18th-century Pashmina textiles for the National Museum of Nepal.',
     clientName: 'National Museum of Nepal',
     completionDate: new Date('2024-03-25'),
-    imageUrl: '/images/projects/museum-restoration.jpg',
+    imageUrl: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
     status: 'ACTIVE' as const,
     featured: false
   }
@@ -283,79 +283,10 @@ async function main() {
       console.log(`✅ Created testimonial: ${testimonial.clientName}`);
     }
 
-    // Seed Hero Slides
-    console.log('🌱 Seeding hero slides...');
-    const heroSlides = [
-      {
-        title: 'Furhimalaya',
-        subtitle: 'Weaving Dreams, Crafting Heritage',
-        description: 'Discover the timeless artistry of authentic Himalayan Pashmina, where centuries of tradition meet contemporary luxury. Each piece is a masterwork of heritage craftsmanship.',
-        imageUrl: 'https://images.unsplash.com/photo-1594736797933-d0401ba2fe65?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80',
-        imageAlt: 'Furhimalaya - Authentic Himalayan Pashmina Heritage',
-        primaryButtonText: 'Explore Collections',
-        primaryButtonUrl: '/services',
-        secondaryButtonText: 'Our Story',
-        secondaryButtonUrl: '/about',
-        status: Status.ACTIVE,
-        displayOrder: 1,
-        textAlign: 'left',
-        textColor: '#ffffff',
-        overlayOpacity: 0.4,
-        seoTitle: 'Furhimalaya - Authentic Himalayan Pashmina and Luxury Textiles',
-        seoDescription: 'Discover exquisite handwoven Pashmina and luxury textiles crafted by master artisans using traditional Himalayan techniques.'
-      },
-      {
-        title: 'Uncompromising Quality',
-        subtitle: 'The Hallmarks of True Pashmina',
-        description: 'Every piece we create is a testament to the rich heritage of Himalayan craftsmanship. From ethical sourcing to the final luxurious touch, we preserve traditional art.',
-        imageUrl: 'https://images.unsplash.com/photo-1445205170444-d2991e4ea4c7?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80',
-        imageAlt: 'Master Artisan Weaving Premium Pashmina',
-        primaryButtonText: 'Quality Promise',
-        primaryButtonUrl: '/about#quality',
-        secondaryButtonText: 'Shop Now',
-        secondaryButtonUrl: '/services',
-        status: Status.ACTIVE,
-        displayOrder: 2,
-        textAlign: 'left',
-        textColor: '#ffffff',
-        overlayOpacity: 0.5,
-        seoTitle: 'Premium Quality Pashmina - Traditional Himalayan Craftsmanship',
-        seoDescription: 'Experience uncompromising quality in every handwoven Pashmina piece, crafted using centuries-old techniques and authentic materials.'
-      },
-      {
-        title: 'Master Artisans',
-        subtitle: 'Preserving Ancient Traditions',
-        description: 'Our master weavers carry forward generations of knowledge, creating each Pashmina with meticulous care and authentic techniques passed down through centuries.',
-        imageUrl: 'https://images.unsplash.com/photo-1582736113823-df2aa71e5a9b?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80',
-        imageAlt: 'Himalayan Master Artisan Traditional Weaving',
-        primaryButtonText: 'Meet Our Artisans',
-        primaryButtonUrl: '/about#artisans',
-        secondaryButtonText: 'View Gallery',
-        secondaryButtonUrl: '/projects',
-        status: Status.ACTIVE,
-        displayOrder: 3,
-        textAlign: 'left',
-        textColor: '#ffffff',
-        overlayOpacity: 0.35,
-        seoTitle: 'Master Artisans - Traditional Himalayan Pashmina Weaving',
-        seoDescription: 'Meet the master artisans who preserve ancient Himalayan weaving traditions and create exceptional Pashmina masterpieces.'
-      }
-    ];
-
-    // First, clear existing hero slides
+    // Clear existing hero slides (no new ones will be seeded)
+    console.log('🗑️ Clearing hero slides from database...');
     await prisma.heroSlide.deleteMany({});
-    console.log('🗑️ Cleared existing hero slides');
-
-    for (const slideData of heroSlides) {
-      try {
-        const slide = await prisma.heroSlide.create({
-          data: slideData
-        });
-        console.log(`✅ Created hero slide: ${slide.title}`);
-      } catch (error) {
-        console.error(`❌ Error creating hero slide "${slideData.title}":`, error);
-      }
-    }
+    console.log('✅ Hero slides cleared - fallback video will be used');
 
     console.log('🎉 Database seeded successfully!');
   } catch (error) {

@@ -19,6 +19,20 @@ const csrfExemptPaths = [
 
 // Conditional CSRF protection - skip for GET requests and exempt paths
 export const csrfProtection = (req: Request, res: Response, next: NextFunction) => {
+  // In development, apply middleware to generate tokens but skip validation
+  if (process.env.NODE_ENV === 'development') {
+    return (csrfMiddleware as any)(req, res, (err: any) => {
+      // Ignore all CSRF errors in development, including token validation errors
+      if (err && err.code === 'EBADCSRFTOKEN') {
+        return next();
+      }
+      if (err) {
+        return next(err);
+      }
+      next();
+    });
+  }
+  
   // Always apply CSRF middleware for token generation, but skip validation for safe methods
   if (['GET', 'HEAD', 'OPTIONS'].includes(req.method)) {
     // Apply middleware to generate token but don't validate

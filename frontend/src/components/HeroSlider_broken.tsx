@@ -35,26 +35,32 @@ export default function HeroSlider() {
         console.log('Fetching hero slides...');
         
         const response = await fetch(buildApiUrl('/hero-slides/'), {
-          cache: 'no-store'
+          cache: 'no-store' // Ensure fresh data
         });
+        
+        console.log('Response status:', response.status);
         
         if (response.ok) {
           const data = await response.json();
+          console.log('Hero slides response:', data);
+          
           const activeSlides = data.data || [];
+          console.log('Active slides count:', activeSlides.length);
           
           if (activeSlides.length > 0) {
+            console.log('Setting dynamic slides:', activeSlides);
             setSlides(activeSlides);
           } else {
-            // Use fallback slides when no database data
+            console.log('No active slides found, using default slides');
+            // Fallback to default slides if no active slides found
             setSlides(getDefaultSlides());
           }
         } else {
-          // Use fallback on API error
+          console.error('Failed to fetch hero slides, using default slides');
           setSlides(getDefaultSlides());
         }
       } catch (error) {
         console.error('Error fetching hero slides:', error);
-        // Use fallback on fetch error
         setSlides(getDefaultSlides());
       } finally {
         setLoading(false);
@@ -82,7 +88,7 @@ export default function HeroSlider() {
       const slideId = slides[currentSlide].id;
       
       // Only track views for real slides, not default/fallback slides
-      if (slideId && !slideId.startsWith('fallback-')) {
+      if (slideId && !slideId.startsWith('default-')) {
         fetch(`/api/hero-slides/${slideId}`, {
           method: 'POST',
           headers: {
@@ -127,7 +133,7 @@ export default function HeroSlider() {
   const handleButtonClick = async (slideId: string, url: string) => {
     try {
       // Only track clicks for real slides, not default/fallback slides
-      if (slideId && !slideId.startsWith('fallback-')) {
+      if (slideId && !slideId.startsWith('default-')) {
         await fetch(`/api/hero-slides/${slideId}/track-click`, {
           method: 'POST',
           headers: {
@@ -200,30 +206,45 @@ export default function HeroSlider() {
                     left: '50%',
                     top: '50%'
                   }}
+                  frameBorder="0"
                   allow="autoplay; encrypted-media"
-                  allowFullScreen
-                ></iframe>
+                  allowFullScreen={false}
+                />
                 <div 
                   className="absolute inset-0 bg-black"
                   style={{ opacity: slide.overlayOpacity }}
                 ></div>
               </div>
-            ) : slide.imageUrl ? (
+            ) : (
               <>
                 <Image
-                  src={slide.imageUrl}
+                  src={API_CONFIG.getImageUrl(slide.imageUrl)}
                   alt={slide.imageAlt || slide.title}
                   fill
                   className="object-cover"
                   priority={index === 0}
-                  quality={90}
+                  unoptimized={true}
+                  onError={(e) => {
+                    const processedUrl = API_CONFIG.getImageUrl(slide.imageUrl);
+                    console.error('❌ Failed to load slide image');
+                    console.error('  Original path:', slide.imageUrl);
+                    console.error('  Processed URL:', processedUrl);
+                    console.error('  API Base:', API_CONFIG.API_BASE);
+                    console.error('  Server Base:', API_CONFIG.BASE_URL);
+                  }}
+                  onLoad={() => {
+                    const processedUrl = API_CONFIG.getImageUrl(slide.imageUrl);
+                    console.log('✅ Successfully loaded slide image');
+                    console.log('  Original path:', slide.imageUrl);
+                    console.log('  Processed URL:', processedUrl);
+                  }}
                 />
                 <div 
                   className="absolute inset-0 bg-black"
                   style={{ opacity: slide.overlayOpacity }}
                 ></div>
               </>
-            ) : null}
+            )}
           </div>
 
           {/* Hide text content for fallback video - show only video */}
@@ -238,64 +259,63 @@ export default function HeroSlider() {
                   }`}
                   style={{ color: slide.textColor }}
                 >
-                  {/* Enhanced luxury styling for video slide */}
-                  {slide.videoUrl ? (
-                    <div className="space-y-6">
-                      <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full border border-white/20 animate-fade-in">
-                        <div className="w-2 h-2 bg-brand-primary-400 rounded-full"></div>
-                        <span className="text-brand-primary-300 font-semibold text-sm">HIMALAYAN HERITAGE</span>
-                      </div>
-                      <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight animate-fade-in delay-200">
-                        <span className="bg-gradient-to-r from-brand-primary-300 via-white to-brand-primary-200 bg-clip-text text-transparent">
-                          {slide.title}
-                        </span>
-                      </h1>
-                      {slide.subtitle && (
-                        <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold bg-gradient-to-r from-brand-primary-400 to-amber-400 bg-clip-text text-transparent animate-fade-in delay-300">
-                          {slide.subtitle}
-                        </h2>
-                      )}
-                      <p className="max-w-3xl text-lg sm:text-xl text-gray-200 leading-relaxed animate-fade-in delay-400">
-                        {slide.description}
-                      </p>
+                {/* Enhanced luxury styling for video slide */}
+                {slide.videoUrl ? (
+                  <div className="space-y-6">
+                    <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full border border-white/20 animate-fade-in">
+                      <div className="w-2 h-2 bg-brand-primary-400 rounded-full"></div>
+                      <span className="text-brand-primary-300 font-semibold text-sm">HIMALAYAN HERITAGE</span>
                     </div>
-                  ) : (
-                    <>
-                      <h1 className="pt-4 sm:pt-6 pb-2 text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold leading-tight animate-fade-in">
+                    <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight animate-fade-in delay-200">
+                      <span className="bg-gradient-to-r from-brand-primary-300 via-white to-brand-primary-200 bg-clip-text text-transparent">
                         {slide.title}
-                      </h1>
-                      {slide.subtitle && (
-                        <h2 className="inline-block mb-3 sm:mb-4 text-3xl sm:text-4xl md:text-5xl bg-gradient-to-r from-brand-primary-400 to-amber-400 bg-clip-text text-transparent animate-fade-in delay-200">
-                          {slide.subtitle}
-                        </h2>
-                      )}
-                      <p className="hidden sm:block max-w-full sm:max-w-3xl pb-8 sm:pb-12 text-sm sm:text-base md:text-lg text-gray-200 leading-relaxed animate-fade-in delay-300">
-                        {slide.description}
-                      </p>
-                    </>
-                  )}
-                  <div className="hidden sm:flex flex-col sm:flex-row gap-4 pt-6 animate-fade-in delay-500">
-                    {slide.primaryButtonText && slide.primaryButtonUrl && (
-                      <Button 
-                        href={slide.primaryButtonUrl}
-                        variant="primary"
-                        className="group px-8 py-4 text-lg font-semibold"
-                        onClick={() => handleButtonClick(slide.id, slide.primaryButtonUrl!)}
-                      >
-                        {slide.primaryButtonText}
-                      </Button>
+                      </span>
+                    </h1>
+                    {slide.subtitle && (
+                      <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold bg-gradient-to-r from-brand-primary-400 to-amber-400 bg-clip-text text-transparent animate-fade-in delay-300">
+                        {slide.subtitle}
+                      </h2>
                     )}
-                    {slide.secondaryButtonText && slide.secondaryButtonUrl && (
-                      <Button 
-                        href={slide.secondaryButtonUrl}
-                        variant="outline"
-                        className="group px-8 py-4 text-lg font-semibold"
-                        onClick={() => handleButtonClick(slide.id, slide.secondaryButtonUrl!)}
-                      >
-                        {slide.secondaryButtonText}
-                      </Button>
-                    )}
+                    <p className="max-w-3xl text-lg sm:text-xl text-gray-200 leading-relaxed animate-fade-in delay-400">
+                      {slide.description}
+                    </p>
                   </div>
+                ) : (
+                  <>
+                    <h1 className="pt-4 sm:pt-6 pb-2 text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold leading-tight animate-fade-in">
+                      {slide.title}
+                    </h1>
+                    {slide.subtitle && (
+                      <h2 className="inline-block mb-3 sm:mb-4 text-3xl sm:text-4xl md:text-5xl bg-gradient-to-r from-brand-primary-400 to-amber-400 bg-clip-text text-transparent animate-fade-in delay-200">
+                        {slide.subtitle}
+                      </h2>
+                    )}
+                    <p className="hidden sm:block max-w-full sm:max-w-3xl pb-8 sm:pb-12 text-sm sm:text-base md:text-lg text-gray-200 leading-relaxed animate-fade-in delay-300">
+                      {slide.description}
+                    </p>
+                  </>
+                )}
+                <div className="hidden sm:flex flex-col sm:flex-row gap-4 pt-6 animate-fade-in delay-500">
+                  {slide.primaryButtonText && slide.primaryButtonUrl && (
+                    <Button 
+                      href={slide.primaryButtonUrl}
+                      variant="primary"
+                      className="group px-8 py-4 text-lg font-semibold"
+                      onClick={() => handleButtonClick(slide.id, slide.primaryButtonUrl!)}
+                    >
+                      {slide.primaryButtonText}
+                    </Button>
+                  )}
+                  {slide.secondaryButtonText && slide.secondaryButtonUrl && (
+                    <Button 
+                      href={slide.secondaryButtonUrl}
+                      variant="outline"
+                      className="group px-8 py-4 text-lg font-semibold"
+                      onClick={() => handleButtonClick(slide.id, slide.secondaryButtonUrl!)}
+                    >
+                      {slide.secondaryButtonText}
+                    </Button>
+                  )}
                 </div>
               </div>
             </div>
@@ -320,6 +340,7 @@ export default function HeroSlider() {
           ))}
         </div>
       )}
+
     </div>
   );
 }

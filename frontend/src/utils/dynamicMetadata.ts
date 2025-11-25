@@ -17,10 +17,10 @@ export async function generateDynamicMetadata(params?: MetadataParams) {
     const companyName = settings?.company_name || 'Fur Himalaya';
     const tagline = settings?.company_tagline || 'Luxury Pashmina Heritage';
     const defaultTitle = settings?.seo_meta_title || `${companyName} - ${tagline}`;
-    const defaultDescription = settings?.seo_meta_description || 'Professional engineering consultancy and construction services for residential and commercial projects.';
-    const defaultKeywords = settings?.seo_keywords || 'engineering consultancy, construction services, municipality drawing, interior design, civil engineering';
-    const favicon = settings?.site_favicon || '/logo.png';
-    const ogImage = settings?.seo_og_image || settings?.seo_google_image || '/logo.png';
+    const defaultDescription = settings?.seo_meta_description || 'Experience the finest authentic Himalayan Pashmina. Each piece represents centuries of traditional craftsmanship and uncompromising quality.';
+    const defaultKeywords = settings?.seo_keywords || 'pashmina, luxury scarves, himalayan crafts, premium shawls, authentic cashmere, luxury fashion';
+    const favicon = settings?.site_favicon || '/favicon.ico';
+    const ogImage = settings?.seo_og_image || settings?.seo_google_image || '/images/logo.png';
     const twitterImage = settings?.seo_twitter_card_image || ogImage;
 
     // Build final values
@@ -77,7 +77,7 @@ export async function generateDynamicMetadata(params?: MetadataParams) {
       twitter: {
         card: 'summary_large_image',
         site: settings?.social_twitter || '@forevershine',
-        creator: settings?.social_twitter || '@forevershine',
+        creator: settings?.social_twitter || '@furhimalaya',
         title: finalTitle,
         description: finalDescription,
         images: [twitterImage.startsWith('http') ? twitterImage : `${baseUrl}${twitterImage}`],
@@ -93,35 +93,39 @@ export async function generateDynamicMetadata(params?: MetadataParams) {
   } catch (error) {
     console.error('Error generating dynamic metadata:', error);
     
-    // Return fallback metadata
+    // Return fallback metadata for Pashmina brand
+    const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000';
+    const fallbackTitle = params?.title ? `${params.title} - Fur Himalaya` : 'Fur Himalaya - Luxury Pashmina Heritage';
+    const fallbackDescription = params?.description || 'Experience the finest authentic Himalayan Pashmina. Each piece represents centuries of traditional craftsmanship and uncompromising quality.';
+    
     return {
-      title: 'Forever Shine Engineering - Professional Engineering & Construction Services',
-      description: 'Forever Shine Engineering provides professional engineering consultancy and construction services for residential and commercial projects.',
-      keywords: 'engineering consultancy, construction services, municipality drawing, interior design, civil engineering',
+      title: fallbackTitle,
+      description: fallbackDescription,
+      keywords: params?.keywords || 'pashmina, luxury scarves, himalayan crafts, premium shawls, authentic cashmere, luxury fashion',
       icons: {
-        icon: '/logo.png',
-        shortcut: '/logo.png',
-        apple: '/logo.png',
+        icon: '/favicon.ico',
+        shortcut: '/favicon.ico',
+        apple: '/favicon.ico',
       },
       openGraph: {
         type: 'website',
-        siteName: 'Forever Shine Engineering',
-        title: 'Forever Shine Engineering - Professional Engineering & Construction Services',
-        description: 'Forever Shine Engineering provides professional engineering consultancy and construction services for residential and commercial projects.',
+        siteName: 'Fur Himalaya',
+        title: fallbackTitle,
+        description: fallbackDescription,
         images: [
           {
-            url: '/logo.png',
+            url: params?.image || `${baseUrl}/images/logo.png`,
             width: 1200,
             height: 630,
-            alt: 'Forever Shine Engineering Logo',
+            alt: 'Fur Himalaya - Luxury Pashmina Heritage',
           },
         ],
       },
       twitter: {
         card: 'summary_large_image',
-        title: 'Forever Shine Engineering - Professional Engineering & Construction Services',
-        description: 'Forever Shine Engineering provides professional engineering consultancy and construction services for residential and commercial projects.',
-        images: ['/logo.png'],
+        title: fallbackTitle,
+        description: fallbackDescription,
+        images: [params?.image || '/images/logo.png'],
       },
     };
   }

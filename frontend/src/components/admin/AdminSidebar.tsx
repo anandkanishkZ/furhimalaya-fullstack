@@ -20,7 +20,8 @@ import {
   Sliders,
   FileText,
   Bell,
-  HelpCircle
+  HelpCircle,
+  Building
 } from 'lucide-react';
 
 interface AdminSidebarProps {
@@ -44,8 +45,8 @@ export default function AdminSidebar({ isOpen, onToggle }: AdminSidebarProps) {
   const pathname = usePathname();
   const { logout, user } = useAuth();
 
-  // Memoize navigation structure for better performance
-  const navigationSections: NavSection[] = useMemo(() => [
+  // Navigation structure
+  const navigationSections: NavSection[] = [
     {
       title: 'Main',
       items: [
@@ -68,6 +69,11 @@ export default function AdminSidebar({ isOpen, onToggle }: AdminSidebarProps) {
           name: 'Hero Slides',
           href: '/admin/hero-slides',
           icon: Sliders,
+        },
+        {
+          name: 'Our Clients',
+          href: '/admin/clients',
+          icon: Building,
         },
         {
           name: 'Services',
@@ -126,7 +132,7 @@ export default function AdminSidebar({ isOpen, onToggle }: AdminSidebarProps) {
         },
       ]
     }
-  ], []);
+  ];
 
   const handleLogout = () => {
     logout();

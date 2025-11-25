@@ -9,8 +9,8 @@ export function generateProjectStructuredData(project: Project) {
     "category": project.category,
     "creator": {
       "@type": "Organization",
-      "name": "Forever Shine Engineering",
-      "url": "https://forevershine.com.np"
+      "name": "Fur Himalaya",
+      "url": "https://furhimalaya.com"
     },
     "dateCreated": project.createdAt,
     "dateModified": project.updatedAt,
@@ -22,8 +22,8 @@ export function generateProjectStructuredData(project: Project) {
       .trim()}`,
     "isPartOf": {
       "@type": "WebSite",
-      "name": "Forever Shine Engineering",
-      "url": "https://forevershine.com.np"
+      "name": "Fur Himalaya",
+      "url": "https://furhimalaya.com"
     }
   };
 }
@@ -32,20 +32,20 @@ export function generateOrganizationStructuredData() {
   return {
     "@context": "https://schema.org",
     "@type": "Organization",
-    "name": "Forever Shine Engineering",
-    "url": "https://forevershine.com.np",
-    "description": "Professional engineering and construction services provider specializing in residential, commercial, and infrastructure projects.",
+    "name": "Fur Himalaya",
+    "url": "https://furhimalaya.com",
+    "description": "Luxury Pashmina Heritage - Experience the finest authentic Himalayan Pashmina crafted with centuries of traditional techniques.",
     "foundingDate": "2020",
     "areaServed": {
       "@type": "Country",
       "name": "Nepal"
     },
     "serviceType": [
-      "Engineering Services",
-      "Construction Services",
-      "Infrastructure Development",
-      "Building Construction",
-      "Project Management"
+      "Luxury Pashmina Products",
+      "Traditional Handicrafts",
+      "Premium Scarves & Shawls",
+      "Authentic Cashmere",
+      "Custom Textile Services"
     ],
     "contactPoint": {
       "@type": "ContactPoint",
@@ -55,8 +55,8 @@ export function generateOrganizationStructuredData() {
       "availableLanguage": ["en", "ne"]
     },
     "sameAs": [
-      "https://facebook.com/forever-shine-engineering",
-      "https://linkedin.com/company/forever-shine-engineering"
+      "https://facebook.com/furhimalaya",
+      "https://instagram.com/furhimalaya"
     ]
   };
 }
@@ -69,7 +69,7 @@ export function generateBreadcrumbStructuredData(items: Array<{name: string, url
       "@type": "ListItem",
       "position": index + 1,
       "name": item.name,
-      "item": `https://forevershine.com.np${item.url}`
+      "item": `https://furhimalaya.com${item.url}`
     }))
   };
 }

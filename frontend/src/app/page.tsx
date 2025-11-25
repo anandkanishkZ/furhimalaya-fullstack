@@ -6,6 +6,7 @@ import SectionTitle from '@/components/SectionTitle';
 import ServicesCarousel from '@/components/ServicesCarousel';
 import UniqueProjectsCarousel from '@/components/UniqueProjectsCarousel';
 import SimpleTestimonialsCarousel from '@/components/SimpleTestimonialsCarousel';
+import ClientCarousel from '@/components/ClientCarousel';
 import Button from '@/components/Button';
 import { useSetting } from '@/hooks/useSiteSettings';
 import { apiClient } from '@/utils/admin/apiClient';
@@ -178,7 +179,7 @@ export default function Home() {
             <div className="relative">
               <div className="relative overflow-hidden rounded-3xl shadow-2xl">
                 <Image
-                  src="https://images.unsplash.com/photo-1594736797933-d0401ba2fe65?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+                  src="https://images.unsplash.com/photo-1559827260-dc66d52bef19?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
                   alt="Master Artisan Weaving Luxury Pashmina - Furhimalaya Heritage"
                   className="w-full h-[600px] object-cover"
                   width={800}
@@ -383,6 +384,13 @@ export default function Home() {
           />
         </div>
       </section>
+
+      {/* Our Trusted Clients Section */}
+      <ClientCarousel 
+        title="Our Trusted Clients"
+        subtitle="Proud to partner with industry leaders who value authentic craftsmanship"
+        backgroundStyle="gradient"
+      />
 
       {/* Luxury Client Stories Section */}
       <section className="py-16 sm:py-20 md:py-24 bg-gradient-to-br from-brand-primary-900 via-gray-900 to-black relative overflow-hidden">

@@ -63,6 +63,24 @@ export interface TeamMember {
   updatedAt: string;
 }
 
+export interface Client {
+  id: string;
+  name: string;
+  description?: string;
+  website?: string;
+  logoUrl?: string;
+  category?: string;
+  contactEmail?: string;
+  contactPhone?: string;
+  status: 'ACTIVE' | 'INACTIVE';
+  featured: boolean;
+  displayOrder: number;
+  startDate?: string;
+  endDate?: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
 export interface ApiResponse<T = any> {
   success: boolean;
   message: string;
@@ -142,8 +160,30 @@ class PublicApiClient {
   // Get public settings
   async getPublicSettings(): Promise<ApiResponse<Record<string, any>>> {
     try {
-      const response = await fetch(`${this.baseURL}/public/settings`);
+      const response = await fetch(`${this.baseURL}/public/settings`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        next: { revalidate: 3600 } // Cache for 1 hour to prevent rate limiting
+      });
+      
       if (!response.ok) {
+        // If rate limited (429), return cached fallback
+        if (response.status === 429) {
+          console.warn('Rate limited, using fallback settings');
+          return {
+            success: true,
+            message: 'Using fallback settings due to rate limiting',
+            data: {
+              company_name: 'Fur Himalaya',
+              company_tagline: 'Luxury Pashmina Heritage',
+              seo_meta_title: 'Fur Himalaya - Luxury Pashmina Heritage',
+              seo_meta_description: 'Experience the finest authentic Himalayan Pashmina crafted with timeless artistry.',
+              seo_keywords: 'pashmina, luxury scarves, himalayan crafts, premium shawls'
+            }
+          };
+        }
         throw new Error(`HTTP error! status: ${response.status}`);
       }
       return await response.json();
@@ -177,6 +217,45 @@ class PublicApiClient {
       return await response.json();
     } catch (error) {
       console.error('Failed to fetch team members:', error);
+      throw error;
+    }
+  }
+
+  // Get all clients (public endpoint)
+  async getClients(params?: {
+    category?: string;
+    featured?: boolean;
+    limit?: number;
+    skip?: number;
+  }): Promise<ApiResponse<Client[]>> {
+    try {
+      const queryParams = new URLSearchParams();
+      if (params?.category) queryParams.append('category', params.category);
+      if (params?.featured !== undefined) queryParams.append('featured', params.featured.toString());
+      if (params?.limit) queryParams.append('limit', params.limit.toString());
+      if (params?.skip) queryParams.append('skip', params.skip.toString());
+
+      const response = await fetch(`${this.baseURL}/clients?${queryParams}`);
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      return await response.json();
+    } catch (error) {
+      console.error('Failed to fetch clients:', error);
+      throw error;
+    }
+  }
+
+  // Get single client by ID (public endpoint)
+  async getClient(id: string): Promise<ApiResponse<Client>> {
+    try {
+      const response = await fetch(`${this.baseURL}/clients/${id}`);
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      return await response.json();
+    } catch (error) {
+      console.error('Failed to fetch client:', error);
       throw error;
     }
   }

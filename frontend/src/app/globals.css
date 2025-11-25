@@ -174,6 +174,15 @@
   }
 }
 
+@keyframes carousel-smooth {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
 @keyframes shimmer {
   0% {
     background-position: -1000px 0;
@@ -263,6 +272,10 @@
 
 .animate-carousel {
   animation: carousel 20s linear infinite;
+}
+
+.animate-carousel-smooth {
+  animation: carousel-smooth 30s linear infinite;
 }
 
 .animate-shimmer {

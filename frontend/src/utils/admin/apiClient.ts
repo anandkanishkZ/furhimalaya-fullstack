@@ -118,7 +118,12 @@ class ApiClient {
             
             if (!retryResponse.ok) {
               const errorData = await retryResponse.json().catch(() => ({}));
-              throw new Error(errorData.message || `HTTP ${retryResponse.status}: ${retryResponse.statusText}`);
+              const error = new Error(errorData.message || `HTTP ${retryResponse.status}: ${retryResponse.statusText}`);
+              (error as any).response = {
+                status: retryResponse.status,
+                data: errorData
+              };
+              throw error;
             }
             
             const data = await retryResponse.json();
@@ -128,7 +133,13 @@ class ApiClient {
 
         if (!response.ok) {
           const errorData = await response.json().catch(() => ({}));
-          throw new Error(errorData.message || `HTTP ${response.status}: ${response.statusText}`);
+          const error = new Error(errorData.message || `HTTP ${response.status}: ${response.statusText}`);
+          // Attach the full error response for detailed error handling
+          (error as any).response = {
+            status: response.status,
+            data: errorData
+          };
+          throw error;
         }
 
         const data = await response.json();
@@ -627,6 +638,89 @@ class ApiClient {
   async getSystemInfo() {
     return this.request<any>('/system/info', {
       method: 'GET',
+    });
+  }
+
+  // =================== CLIENT MANAGEMENT ===================
+
+  // Get all clients (admin)
+  async getClients(params?: {
+    category?: string;
+    featured?: boolean;
+    status?: string;
+    search?: string;
+    limit?: number;
+    skip?: number;
+    orderBy?: string;
+    orderDir?: 'asc' | 'desc';
+  }) {
+    const queryParams = new URLSearchParams();
+    if (params?.category) queryParams.append('category', params.category);
+    if (params?.featured !== undefined) queryParams.append('featured', params.featured.toString());
+    if (params?.status) queryParams.append('status', params.status);
+    if (params?.search) queryParams.append('search', params.search);
+    if (params?.limit) queryParams.append('limit', params.limit.toString());
+    if (params?.skip) queryParams.append('skip', params.skip.toString());
+    if (params?.orderBy) queryParams.append('orderBy', params.orderBy);
+    if (params?.orderDir) queryParams.append('orderDir', params.orderDir);
+
+    return this.request<any>(`/clients/admin/all?${queryParams}`, {
+      method: 'GET',
+    });
+  }
+
+  // Get single client
+  async getClient(id: string) {
+    return this.request<any>(`/clients/${id}`, {
+      method: 'GET',
+    });
+  }
+
+  // Create new client
+  async createClient(clientData: {
+    name: string;
+    description?: string;
+    website?: string;
+    logoUrl?: string;
+    category?: string;
+    contactEmail?: string;
+    contactPhone?: string;
+    featured?: boolean;
+    displayOrder?: number;
+    startDate?: string;
+    endDate?: string;
+  }) {
+    return this.request<any>('/clients', {
+      method: 'POST',
+      body: JSON.stringify(clientData),
+    });
+  }
+
+  // Update client
+  async updateClient(id: string, clientData: {
+    name?: string;
+    description?: string;
+    website?: string;
+    logoUrl?: string;
+    category?: string;
+    contactEmail?: string;
+    contactPhone?: string;
+    featured?: boolean;
+    displayOrder?: number;
+    startDate?: string;
+    endDate?: string;
+    status?: 'ACTIVE' | 'INACTIVE';
+  }) {
+    return this.request<any>(`/clients/${id}`, {
+      method: 'PUT',
+      body: JSON.stringify(clientData),
+    });
+  }
+
+  // Delete client
+  async deleteClient(id: string) {
+    return this.request<any>(`/clients/${id}`, {
+      method: 'DELETE',
     });
   }
 }

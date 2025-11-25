@@ -11,13 +11,14 @@ dotenv.config();
 // Import logger
 import logger, { logInfo, logError } from './utils/logger';
 
-// Import routes
+// Route imports
 import authRoutes from './routes/auth';
 import serviceRoutes from './routes/services';
 import projectRoutes from './routes/projects';
 import blogRoutes from './routes/blog';
 import teamRoutes from './routes/team';
 import testimonialRoutes from './routes/testimonials';
+import clientRoutes from './routes/clients';
 import settingsRoutes from './routes/settings';
 import publicSettingsRoutes from './routes/public-settings';
 import contactRoutes from './routes/contact';
@@ -101,6 +102,7 @@ app.use('/api/projects', projectRoutes);
 app.use('/api/blog', blogRoutes);
 app.use('/api/team', teamRoutes);
 app.use('/api/testimonials', testimonialRoutes);
+app.use('/api/clients', clientRoutes);
 app.use('/api/settings', settingsRoutes);
 app.use('/api/public/settings', publicSettingsRoutes);
 app.use('/api/contact', contactRoutes);
@@ -111,17 +113,17 @@ app.use('/api/notifications', notificationRoutes);
 app.use('/api/hero-slides', heroSlidesRoutes);
 app.use('/api/system', systemRoutes);
 
-// Security: Honeypot routes (must be last to catch undefined endpoints)
-app.use('/', honeypotRoutes);
-
-// Health check endpoint
+// Health check endpoint (must be before honeypot routes)
 app.get('/api/health', (req: Request, res: Response) => {
   res.json({
     status: 'OK',
-    message: 'Forever Shine Engineering API is running',
+    message: 'Fur Himalaya API is running',
     timestamp: new Date().toISOString()
   });
 });
+
+// Security: Honeypot routes (must be last to catch undefined endpoints)
+app.use('/', honeypotRoutes);
 
 // Error handling middleware
 app.use(csrfErrorHandler); // Handle CSRF errors first

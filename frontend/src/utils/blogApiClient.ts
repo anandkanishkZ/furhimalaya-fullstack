@@ -63,8 +63,7 @@ class BlogApiClient {
         headers: {
           'Content-Type': 'application/json',
         },
-        cache: 'no-store', // Ensure fresh data
-        next: { revalidate: 0 } // Disable caching in Next.js
+        cache: 'no-store' // Ensure fresh data
       });
 
       if (!response.ok) {
@@ -90,8 +89,7 @@ class BlogApiClient {
         headers: {
           'Content-Type': 'application/json',
         },
-        cache: 'no-store', // Ensure fresh data
-        next: { revalidate: 0 } // Disable caching in Next.js
+        cache: 'no-store' // Ensure fresh data
       });
 
       if (!response.ok) {
