@@ -31,7 +31,6 @@ const ClientCarousel: React.FC<ClientCarouselProps> = ({
       try {
         setLoading(true);
         const response = await publicApiClient.getClients({ 
-          status: 'ACTIVE',
           limit: 20 // Fetch active clients
         });
         

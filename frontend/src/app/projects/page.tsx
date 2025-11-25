@@ -21,7 +21,9 @@ import {
   ChevronDown,
   ExternalLink,
   Heart,
-  Sparkles
+  Sparkles,
+  Building2,
+  User
 } from 'lucide-react';
 
 const Projects = () => {
@@ -607,7 +609,7 @@ const Projects = () => {
                           />
                         ) : (
                           <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-blue-100 to-blue-200 rounded-lg">
-                            <Building className="w-8 h-8 text-blue-400" />
+                            <Building2 className="w-8 h-8 text-blue-400" />
                           </div>
                         )}
                       </div>

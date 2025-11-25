@@ -33,6 +33,10 @@ interface SiteSettings {
   stats_client_satisfaction?: string;
   stats_properties_valued?: string;
   stats_banking_partners?: string;
+  stats_pashminas_crafted?: string;
+  stats_master_artisans?: string;
+  stats_years_heritage?: string;
+  stats_global_clients?: string;
 }
 
 interface SiteSettingsContextType {
