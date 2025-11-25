@@ -3,7 +3,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useAuth } from '@/hooks/admin/useAuth';
 import { useRouter } from 'next/navigation';
-import Image from 'next/image';
 import AdminDashboardLayout from '@/components/admin/AdminDashboardLayout';
 import {
   Upload,
@@ -14,11 +13,7 @@ import {
   List,
   Trash2,
   Eye,
-  Download,
-  Filter,
   FolderOpen,
-  Plus,
-  MoreVertical,
   Calendar,
   HardDrive
 } from 'lucide-react';
@@ -296,15 +291,6 @@ export default function MediaGallery() {
         return [...prev, fileId];
       }
     });
-  };
-
-  // Format file size
-  const formatFileSize = (bytes: number) => {
-    if (bytes === 0) return '0 Bytes';
-    const k = 1024;
-    const sizes = ['Bytes', 'KB', 'MB', 'GB'];
-    const i = Math.floor(Math.log(bytes) / Math.log(k));
-    return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
   };
 
   // Format date
@@ -648,4 +634,19 @@ export default function MediaGallery() {
                 <button
                   onClick={() => {
                     const file = files.find(f => f.id === showDeleteConfirm);
-                    if
+                    if (file) {
+                      handleDeleteFile(file);
+                    }
+                  }}
+                  className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700"
+                >
+                  Delete
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+    </AdminDashboardLayout>
+  );
+}

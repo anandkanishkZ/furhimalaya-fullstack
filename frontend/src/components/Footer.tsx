@@ -231,12 +231,12 @@ export default function Footer() {
             <div className="flex items-center gap-3 text-sm text-slate-400">
               <span>Developed by</span>
               <a 
-                href="https://zwickytechnology.com" 
+                href="https://anayainfotech.com.np" 
                 target="_blank" 
                 rel="noopener noreferrer" 
                 className="text-white hover:text-slate-300 transition-colors font-medium"
               >
-                Zwicky Technology
+                Anaya InfoTech
               </a>
             </div>
           </div>
