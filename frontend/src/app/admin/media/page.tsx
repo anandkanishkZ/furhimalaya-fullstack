@@ -23,7 +23,8 @@ import {
   HardDrive
 } from 'lucide-react';
 import apiClient from '@/utils/admin/apiClient';
-import { toast } from '@/utils/toast';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { getValidImageUrl, formatFileSize, isValidImageFile, isValidFileSize } from '@/utils/media';
 
 interface MediaFile {
@@ -237,7 +238,7 @@ export default function MediaGallery() {
       }
       
       if (invalidFiles.length > 0) {
-        toast.warning(`Some files were skipped: ${invalidFiles.join(', ')}`);
+        toast.warn(`Some files were skipped: ${invalidFiles.join(', ')}`);
       }
       
       if (validFiles.length === 0) {
@@ -647,17 +648,4 @@ export default function MediaGallery() {
                 <button
                   onClick={() => {
                     const file = files.find(f => f.id === showDeleteConfirm);
-                    if (file) handleDeleteFile(file);
-                  }}
-                  className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700"
-                >
-                  Delete
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
-    </AdminDashboardLayout>
-  );
-}
+                    if

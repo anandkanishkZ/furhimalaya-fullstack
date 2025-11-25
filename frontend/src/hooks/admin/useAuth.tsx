@@ -9,25 +9,45 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [isInitialized, setIsInitialized] = useState(false);
 
   useEffect(() => {
+    let isMounted = true; // Flag to prevent state updates if component unmounts
+    
     // Check for existing authentication by trying to fetch user data
     const checkAuth = async () => {
       try {
         const response = await apiClient.getCurrentUser();
-        if (response.success && response.data) {
+        if (isMounted && response.success && response.data) {
           setUser(response.data);
         }
       } catch (error) {
         console.error('Auth check failed:', error);
         // User is not authenticated or session expired
-        setUser(null);
+        if (isMounted) {
+          setUser(null);
+        }
       } finally {
-        setIsLoading(false);
+        if (isMounted) {
+          setIsInitialized(true);
+          // Add minimum loading time to prevent flickering
+          setTimeout(() => {
+            if (isMounted) {
+              setIsLoading(false);
+            }
+          }, 100);
+        }
       }
     };
     
-    checkAuth();
+    // Add a small delay to prevent race conditions in development
+    const timeoutId = setTimeout(checkAuth, 10);
+    
+    // Cleanup function
+    return () => {
+      isMounted = false;
+      clearTimeout(timeoutId);
+    };
   }, []);
 
   const login = async (email: string, password: string): Promise<boolean> => {
@@ -68,7 +88,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       token: null, // No longer using token in frontend
       login,
       logout,
-      isLoading
+      isLoading: isLoading || !isInitialized
     }}>
       {children}
     </AuthContext.Provider>

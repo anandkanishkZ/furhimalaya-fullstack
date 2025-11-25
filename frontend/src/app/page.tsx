@@ -385,11 +385,12 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Our Trusted Clients Section */}
+      {/* Our Trusted Clients Section - Only show if there are clients */}
       <ClientCarousel 
         title="Our Trusted Clients"
         subtitle="Proud to partner with industry leaders who value authentic craftsmanship"
         backgroundStyle="gradient"
+        conditionalRendering={true}
       />
 
       {/* Luxury Client Stories Section */}

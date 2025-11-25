@@ -203,7 +203,7 @@ const About = () => {
                   <Button 
                     href="#story" 
                     variant="primary" 
-                    className="group bg-white text-brand-primary hover:bg-brand-primary-50 border-0 px-8 py-4 text-lg font-medium"
+                    className="group bg-white text-white hover:bg-brand-primary-50 hover:text-[#9c7846] border-0 px-8 py-4 text-lg font-medium"
                   >
                     Discover Our Heritage
                     <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
@@ -543,14 +543,100 @@ const About = () => {
         </div>
       </section>
 
-      {/* Our Clients Section */}
+      {/* Our Clients Section - Only show if there are clients */}
       <ClientCarousel 
         title="Our Clients"
         subtitle="Trusted partnerships that drive mutual success"
         backgroundStyle="light"
+        conditionalRendering={true}
       />
 
-      {/* Meet Our Team Section */}
+      {/* Meet Our Team Section - Only show if there are team members */}
+      {(loading || teamMembers.length > 0) && (
+        <section className="py-12 sm:py-16 md:py-20 bg-white">
+          <div className="container mx-auto px-4 sm:px-6">
+            <SectionTitle
+              title="Meet Our Team"
+              subtitle="The passionate professionals behind our success"
+              center={true}
+            />
+
+            {loading ? (
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 sm:gap-8 mt-8 sm:mt-12">
+                {[1, 2, 3, 4, 5, 6, 7, 8].map((i) => (
+                  <SkeletonTeamCard key={i} />
+                ))}
+              </div>
+            ) : teamMembers.length > 0 ? (
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 sm:gap-8 mt-8 sm:mt-12">
+                {teamMembers.map((member) => (
+                  <div key={member.id} className="bg-white rounded-lg shadow-lg hover:shadow-xl transition-shadow group">
+                    {member.imageUrl && (
+                      <div className="relative h-64 sm:h-72 md:h-80 overflow-hidden rounded-t-lg">
+                        <Image
+                          src={API_CONFIG.getImageUrl(member.imageUrl)}
+                          alt={member.name}
+                          fill
+                          className="object-cover object-center group-hover:scale-105 transition-transform duration-300"
+                        />
+                      </div>
+                    )}
+                    <div className="p-4 sm:p-6">
+                      <h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-1">{member.name}</h3>
+                      <p className="text-blue-600 font-medium mb-2 sm:mb-3 text-sm sm:text-base">{member.position}</p>
+                      
+                      {member.bio && (
+                        <p className="text-gray-600 text-xs sm:text-sm mb-3 sm:mb-4 leading-relaxed line-clamp-3">
+                          {member.bio}
+                        </p>
+                      )}
+                      
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center space-x-2 sm:space-x-3">
+                          {member.email && (
+                            <a
+                              href={`mailto:${member.email}`}
+                              className="text-gray-400 hover:text-blue-600 transition-colors"
+                              title="Send Email"
+                            >
+                              <Mail className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
+                            </a>
+                          )}
+                          
+                          {member.phone && (
+                            <a
+                              href={`tel:${member.phone}`}
+                              className="text-gray-400 hover:text-blue-600 transition-colors"
+                              title="Call Phone"
+                            >
+                              <Phone className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
+                            </a>
+                          )}
+                        </div>
+                        
+                        {/* Social Media Links */}
+                        <SocialMediaLinks
+                          linkedin={member.linkedin}
+                          facebook={member.facebook}
+                          twitter={member.twitter}
+                          instagram={member.instagram}
+                          tiktok={member.tiktok}
+                          size="sm"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            ) : null}
+          </div>
+        </section>
+      )}
+
+      {/* 
+      COMMENTED OUT: Meet Our Team Section
+      This section is now conditionally rendered above - it only shows when there are team members in the database
+      
       <section className="py-12 sm:py-16 md:py-20 bg-white">
         <div className="container mx-auto px-4 sm:px-6">
           <SectionTitle
@@ -558,82 +644,10 @@ const About = () => {
             subtitle="The passionate professionals behind our success"
             center={true}
           />
-
-          {loading ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 sm:gap-8 mt-8 sm:mt-12">
-              {[1, 2, 3, 4, 5, 6, 7, 8].map((i) => (
-                <SkeletonTeamCard key={i} />
-              ))}
-            </div>
-          ) : teamMembers.length > 0 ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 sm:gap-8 mt-8 sm:mt-12">
-              {teamMembers.map((member) => (
-                <div key={member.id} className="bg-white rounded-lg shadow-lg hover:shadow-xl transition-shadow group">
-                  {member.imageUrl && (
-                    <div className="relative h-64 sm:h-72 md:h-80 overflow-hidden rounded-t-lg">
-                      <Image
-                        src={API_CONFIG.getImageUrl(member.imageUrl)}
-                        alt={member.name}
-                        fill
-                        className="object-cover object-center group-hover:scale-105 transition-transform duration-300"
-                      />
-                    </div>
-                  )}
-                  <div className="p-4 sm:p-6">
-                    <h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-1">{member.name}</h3>
-                    <p className="text-blue-600 font-medium mb-2 sm:mb-3 text-sm sm:text-base">{member.position}</p>
-                    
-                    {member.bio && (
-                      <p className="text-gray-600 text-xs sm:text-sm mb-3 sm:mb-4 leading-relaxed line-clamp-3">
-                        {member.bio}
-                      </p>
-                    )}
-                    
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center space-x-2 sm:space-x-3">
-                        {member.email && (
-                          <a
-                            href={`mailto:${member.email}`}
-                            className="text-gray-400 hover:text-blue-600 transition-colors"
-                            title="Send Email"
-                          >
-                            <Mail className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
-                          </a>
-                        )}
-                        
-                        {member.phone && (
-                          <a
-                            href={`tel:${member.phone}`}
-                            className="text-gray-400 hover:text-blue-600 transition-colors"
-                            title="Call Phone"
-                          >
-                            <Phone className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
-                          </a>
-                        )}
-                      </div>
-                      
-                      {/* Social Media Links */}
-                      <SocialMediaLinks
-                        linkedin={member.linkedin}
-                        facebook={member.facebook}
-                        twitter={member.twitter}
-                        instagram={member.instagram}
-                        tiktok={member.tiktok}
-                        size="sm"
-                      />
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          ) : (
-            <div className="text-center py-12">
-              <Users className="mx-auto h-10 w-10 sm:h-12 sm:w-12 text-gray-400 mb-4" />
-              <p className="text-gray-600 text-sm sm:text-base">No team members found. Add team members from the admin panel.</p>
-            </div>
-          )}
+          // ... rest of the team section code
         </div>
       </section>
+      */}
 
 
     </div>

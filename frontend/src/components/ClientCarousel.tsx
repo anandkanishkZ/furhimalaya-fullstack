@@ -11,6 +11,7 @@ interface ClientCarouselProps {
   showTitle?: boolean;
   className?: string;
   backgroundStyle?: 'light' | 'dark' | 'gradient';
+  conditionalRendering?: boolean;
 }
 
 const ClientCarousel: React.FC<ClientCarouselProps> = ({
@@ -18,7 +19,8 @@ const ClientCarousel: React.FC<ClientCarouselProps> = ({
   subtitle = "Proud to work with industry leaders",
   showTitle = true,
   className = "",
-  backgroundStyle = 'light'
+  backgroundStyle = 'light',
+  conditionalRendering = false
 }) => {
   const [clients, setClients] = useState<Client[]>([]);
   const [loading, setLoading] = useState(true);
@@ -79,6 +81,11 @@ const ClientCarousel: React.FC<ClientCarouselProps> = ({
   }
 
   if (error || !clients.length) {
+    // If conditionalRendering is true, don't show anything when there are no clients
+    if (conditionalRendering) {
+      return null;
+    }
+    
     return (
       <section className={`py-12 sm:py-16 md:py-20 ${getBackgroundClasses()} ${className}`}>
         <div className="container mx-auto px-4 sm:px-6">
@@ -149,17 +156,7 @@ const ClientCarousel: React.FC<ClientCarouselProps> = ({
           <div className="absolute top-0 left-0 w-16 sm:w-24 md:w-32 h-full bg-gradient-to-r from-gray-50 to-transparent pointer-events-none z-10"></div>
           <div className="absolute top-0 right-0 w-16 sm:w-24 md:w-32 h-full bg-gradient-to-l from-gray-50 to-transparent pointer-events-none z-10"></div>
         </div>
-        
-        {/* Call to action */}
-        <div className="text-center mt-8 sm:mt-12">
-          <p className="text-gray-600 mb-4">
-            Interested in partnering with us?
-          </p>
-          <button className="inline-flex items-center px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium">
-            Get in Touch
-            <ExternalLink className="ml-2 w-4 h-4" />
-          </button>
-        </div>
+
       </div>
     </section>
   );

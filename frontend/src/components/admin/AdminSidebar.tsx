@@ -43,10 +43,10 @@ interface NavSection {
 
 export default function AdminSidebar({ isOpen, onToggle }: AdminSidebarProps) {
   const pathname = usePathname();
-  const { logout, user } = useAuth();
+  const { logout, user, isLoading } = useAuth();
 
-  // Navigation structure
-  const navigationSections: NavSection[] = [
+  // Navigation structure - Memoized to prevent unnecessary re-renders
+  const navigationSections: NavSection[] = useMemo(() => [
     {
       title: 'Main',
       items: [
@@ -132,7 +132,7 @@ export default function AdminSidebar({ isOpen, onToggle }: AdminSidebarProps) {
         },
       ]
     }
-  ];
+  ], []); // Empty dependency array since navigation is static
 
   const handleLogout = () => {
     logout();
@@ -150,6 +150,21 @@ export default function AdminSidebar({ isOpen, onToggle }: AdminSidebarProps) {
     }
     return user?.email?.substring(0, 2).toUpperCase() || 'AD';
   };
+
+  // Don't render sidebar during initial loading to prevent hydration issues
+  if (isLoading) {
+    return (
+      <aside
+        className={`fixed inset-y-0 left-0 z-30 w-64 bg-white dark:bg-slate-900 border-r border-gray-200 dark:border-slate-800 shadow-xl transform transition-transform duration-300 ease-in-out ${
+          isOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'
+        } flex flex-col`}
+      >
+        <div className="flex items-center justify-center h-full">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+        </div>
+      </aside>
+    );
+  }
 
   return (
     <>
@@ -202,7 +217,7 @@ export default function AdminSidebar({ isOpen, onToggle }: AdminSidebarProps) {
         <nav className="flex-1 overflow-y-auto px-3 py-4" aria-label="Main navigation">
           <div className="space-y-6">
             {navigationSections.map((section) => (
-              <div key={section.title}>
+              <div key={`section-${section.title}`}>
                 <h3 className="px-3 text-xs font-semibold text-gray-500 dark:text-slate-500 uppercase tracking-wider mb-2">
                   {section.title}
                 </h3>

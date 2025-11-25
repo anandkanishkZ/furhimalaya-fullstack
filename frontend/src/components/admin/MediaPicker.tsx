@@ -20,7 +20,8 @@ import {
 } from 'lucide-react';
 import apiClient from '@/utils/admin/apiClient';
 import { MediaFile } from '@/types/admin';
-import { toast } from '@/utils/toast';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { getValidImageUrl, formatFileSize, isValidImageFile, isValidFileSize } from '@/utils/media';
 
 interface MediaPickerProps {
@@ -154,7 +155,7 @@ const MediaPicker: React.FC<MediaPickerProps> = ({
       }
       
       if (invalidFiles.length > 0) {
-        toast.warning(`Some files were skipped: ${invalidFiles.join(', ')}`);
+        toast.warn(`Some files were skipped: ${invalidFiles.join(', ')}`);
       }
       
       if (validFiles.length === 0) {
