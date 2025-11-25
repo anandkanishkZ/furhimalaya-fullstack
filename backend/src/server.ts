@@ -34,6 +34,7 @@ import honeypotRoutes from './routes/honeypot';
 import { errorHandler } from './middleware/errorHandler';
 import { notFound } from './middleware/notFound';
 import { apiLimiter, systemLimiter, apiDiscoveryLimiter } from './middleware/rateLimiter';
+import { generalRateLimiter, adminRateLimiter } from './middleware/userRateLimiter';
 import { csrfProtection, csrfErrorHandler } from './middleware/csrfProtection';
 import requestLogger from './middleware/requestLogger';
 import httpsMiddleware from './middleware/httpsEnforcement';
@@ -76,8 +77,21 @@ app.use('/api', csrfProtection);
 // Apply general API rate limiting to all routes
 app.use('/api', apiLimiter);
 
+// Apply user-based rate limiting
+app.use('/api', generalRateLimiter);
+
 // Extra security for system routes
 app.use('/api/system', systemLimiter);
+
+// Apply admin rate limiting to admin routes
+app.use('/api/services', adminRateLimiter);
+app.use('/api/projects', adminRateLimiter);
+app.use('/api/blog', adminRateLimiter);
+app.use('/api/team', adminRateLimiter);
+app.use('/api/testimonials', adminRateLimiter);
+app.use('/api/clients', adminRateLimiter);
+app.use('/api/settings', adminRateLimiter);
+app.use('/api/hero-slides', adminRateLimiter);
 
 // API discovery prevention for undefined routes
 app.use('/api', apiDiscoveryLimiter);

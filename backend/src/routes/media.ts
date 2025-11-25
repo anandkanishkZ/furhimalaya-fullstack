@@ -5,6 +5,7 @@ import fs from 'fs';
 import sharp from 'sharp';
 import { ApiResponse, AuthRequest } from '../types';
 import { authenticate, authorize } from '../middleware/authMiddleware';
+import { uploadRateLimiter } from '../middleware/userRateLimiter';
 
 const router = Router();
 
@@ -259,7 +260,7 @@ router.get('/', authenticate, async (req: AuthRequest, res: Response<ApiResponse
 });
 
 // Upload media files
-router.post('/upload', authenticate, upload.array('files', 10), async (req: AuthRequest, res: Response<ApiResponse>) => {
+router.post('/upload', authenticate, authorize(['ADMIN', 'USER']), uploadRateLimiter, upload.array('files', 10), async (req: AuthRequest, res: Response<ApiResponse>) => {
   try {
     const files = req.files as Express.Multer.File[];
     const category = req.body.category || 'general';

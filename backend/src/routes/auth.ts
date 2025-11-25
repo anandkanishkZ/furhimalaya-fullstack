@@ -6,11 +6,14 @@ import { ApiResponse } from '../types';
 import { body, validationResult } from 'express-validator';
 import { notifyWelcome, getUserNotifications } from '../utils/notificationService';
 import { authLimiter } from '../middleware/rateLimiter';
+import { bruteForceProtection, recordFailedLogin, recordSuccessfulLogin } from '../middleware/bruteForce';
+import { authRateLimiter } from '../middleware/userRateLimiter';
+import { logSecurityEvent } from '../utils/securityLogger';
 
 const router = Router();
 
-// Login endpoint with strict rate limiting
-router.post('/login', authLimiter, [
+// Login endpoint with brute force protection and rate limiting
+router.post('/login', authRateLimiter, bruteForceProtection, [
   body('email').isEmail().withMessage('Valid email is required'),
   body('password').isLength({ min: 6 }).withMessage('Password must be at least 6 characters')
 ], async (req: Request, res: Response<ApiResponse>) => {
@@ -32,6 +35,17 @@ router.post('/login', authLimiter, [
     });
 
     if (!user) {
+      // Record failed login attempt
+      await recordFailedLogin(email, req.ip || 'unknown');
+      
+      logSecurityEvent({
+        type: 'FAILED_LOGIN',
+        severity: 'MEDIUM',
+        ip: req.ip || 'unknown',
+        email,
+        details: { reason: 'User not found' }
+      });
+
       return res.status(401).json({
         success: false,
         message: 'Invalid credentials',
@@ -42,12 +56,36 @@ router.post('/login', authLimiter, [
     // Verify password
     const isValidPassword = await bcrypt.compare(password, user.password);
     if (!isValidPassword) {
+      // Record failed login attempt
+      await recordFailedLogin(email, req.ip || 'unknown');
+      
+      logSecurityEvent({
+        type: 'FAILED_LOGIN',
+        severity: 'MEDIUM',
+        ip: req.ip || 'unknown',
+        email,
+        userId: user.id,
+        details: { reason: 'Invalid password' }
+      });
+
       return res.status(401).json({
         success: false,
         message: 'Invalid credentials',
         errors: ['Email or password is incorrect']
       });
     }
+
+    // Record successful login
+    await recordSuccessfulLogin(email);
+    
+    logSecurityEvent({
+      type: 'SUCCESSFUL_LOGIN',
+      severity: 'LOW',
+      ip: req.ip || 'unknown',
+      email,
+      userId: user.id,
+      details: { loginTime: new Date().toISOString() }
+    });
 
     // Check if user has any notifications (first login check)
     const existingNotifications = await getUserNotifications(user.id, { limit: 1 });
