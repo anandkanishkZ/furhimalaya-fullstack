@@ -12,14 +12,17 @@ import {
   Search, 
   Star, 
   Calendar, 
-  Building, 
-  User, 
+  Scissors, 
+  Palette, 
   Loader2, 
   Filter,
-  MapPin,
+  Mountain,
   Award,
   ChevronDown,
-  ExternalLink
+  ExternalLink,
+  Heart,
+  Sparkles,
+  Thread
 } from 'lucide-react';
 
 const Projects = () => {
@@ -33,22 +36,22 @@ const Projects = () => {
   const [showFilters, setShowFilters] = useState(false);
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
 
-  // Dynamic statistics from settings
-  const projectsCompleted = useSetting('stats_projects_completed', '100');
-  const yearsExperience = useSetting('stats_years_experience', '15');
-  const teamMembers = useSetting('stats_team_members', '50');
-  const clientSatisfaction = useSetting('stats_client_satisfaction', '98');
+  // Dynamic statistics from settings - Furhimalaya brand stats
+  const pashminasCrafted = useSetting('stats_pashminas_crafted', '500');
+  const masterArtisans = useSetting('stats_master_artisans', '25');
+  const yearsHeritage = useSetting('stats_years_heritage', '30');
+  const globalClients = useSetting('stats_global_clients', '200');
 
-  // Available categories with icons
+  // Available categories with luxury fashion icons
   const categories = [
-    { id: 'all', name: 'All Projects', icon: Building },
-    { id: 'Residential Building', name: 'Residential', icon: Building },
-    { id: 'Commercial Building', name: 'Commercial', icon: Building },
-    { id: 'Industrial Project', name: 'Industrial', icon: Building },
-    { id: 'Infrastructure', name: 'Infrastructure', icon: MapPin },
-    { id: 'Property Valuation', name: 'Valuation', icon: Award },
-    { id: 'Structural Design', name: 'Structural', icon: Building },
-    { id: 'Other', name: 'Other', icon: Building }
+    { id: 'all', name: 'All Collections', icon: Sparkles },
+    { id: 'Premium Pashmina', name: 'Premium Pashmina', icon: Thread },
+    { id: 'Luxury Shawls', name: 'Luxury Shawls', icon: Palette },
+    { id: 'Heritage Collection', name: 'Heritage Collection', icon: Mountain },
+    { id: 'Bridal Collection', name: 'Bridal Collection', icon: Heart },
+    { id: 'Limited Edition', name: 'Limited Edition', icon: Award },
+    { id: 'Handwoven Scarves', name: 'Handwoven Scarves', icon: Scissors },
+    { id: 'Other', name: 'Other', icon: Sparkles }
   ];
 
   useEffect(() => {
@@ -225,68 +228,143 @@ const Projects = () => {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="relative py-32 bg-blue-700">
-        <div className="absolute inset-0 z-0 opacity-20">
+      <section className="relative py-32 bg-gradient-to-br from-brand-primary-800 to-brand-primary-900 overflow-hidden">
+        <div className="absolute inset-0 z-0 opacity-10">
           <Image
-            src="https://images.unsplash.com/photo-1497366754035-f200968a6e72?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80"
-            alt="Engineering Projects"
+            src="/images/hero-background.jpg"
+            alt="Furhimalaya Heritage Crafts"
             className="w-full h-full object-cover"
             width={2000}
             height={1333}
           />
         </div>
         
+        {/* Elegant overlay pattern */}
+        <div className="absolute inset-0 z-5 opacity-20">
+          <div className="absolute top-20 left-10 w-40 h-40 border border-white/20 rounded-full"></div>
+          <div className="absolute bottom-20 right-10 w-32 h-32 border border-white/20 rounded-full"></div>
+          <div className="absolute top-1/2 left-1/4 w-24 h-24 border border-white/10 rounded-full"></div>
+        </div>
+        
         <div className="container mx-auto px-4 relative z-10">
-          <div className="max-w-3xl mx-auto text-center text-white">
-            <h1 className="text-4xl md:text-5xl font-bold mb-6">Our Projects</h1>
-            <p className="text-xl text-blue-100 mb-8">
-              Explore our portfolio of successful engineering projects that demonstrate 
-              our commitment to excellence, innovation, and sustainable construction practices.
+          <div className="max-w-4xl mx-auto text-center text-white">
+            <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm rounded-full px-6 py-3 mb-6">
+              <Mountain className="w-5 h-5 text-brand-primary-300" />
+              <span className="text-brand-primary-200 font-medium">Himalayan Heritage</span>
+            </div>
+            <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight">
+              Our <span className="text-brand-primary-300">Masterpieces</span>
+            </h1>
+            <p className="text-xl md:text-2xl text-white/90 mb-8 font-light leading-relaxed max-w-3xl mx-auto">
+              Discover our exquisite collection of handcrafted Pashmina creations. Each piece tells a story 
+              of centuries-old tradition, master craftsmanship, and timeless Himalayan heritage.
             </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Button 
+                href="#collections" 
+                variant="primary" 
+                className="bg-brand-primary text-white hover:bg-brand-primary-dark px-8 py-4 text-lg font-medium shadow-lg hover:shadow-xl"
+              >
+                <Sparkles className="w-5 h-5 mr-2 text-white" />
+                <span className="text-white">Explore Collections</span>
+              </Button>
+              <Button 
+                href="/contact" 
+                variant="outline" 
+                className="border-white/30 text-white hover:bg-white/10 px-8 py-4 text-lg font-medium"
+              >
+                Visit Our Atelier
+              </Button>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* Statistics Section */}
-      <section className="py-16 bg-white">
+      {/* Heritage Statistics Section */}
+      <section className="py-20 bg-gradient-to-b from-white to-brand-primary-50">
         <div className="container mx-auto px-4">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-            <div className="text-center">
-              <div className="text-3xl md:text-4xl font-bold text-blue-700 mb-2">{projectsCompleted}+</div>
-              <div className="text-gray-600">Projects Completed</div>
+          <div className="max-w-6xl mx-auto">
+            <div className="text-center mb-12">
+              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+                Crafting Excellence for <span className="text-brand-primary">Generations</span>
+              </h2>
+              <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+                Our heritage speaks through numbers that reflect decades of dedication to authentic Himalayan craftsmanship.
+              </p>
             </div>
-            <div className="text-center">
-              <div className="text-3xl md:text-4xl font-bold text-blue-700 mb-2">{yearsExperience}+</div>
-              <div className="text-gray-600">Years Experience</div>
-            </div>
-            <div className="text-center">
-              <div className="text-3xl md:text-4xl font-bold text-blue-700 mb-2">{teamMembers}+</div>
-              <div className="text-gray-600">Expert Engineers</div>
-            </div>
-            <div className="text-center">
-              <div className="text-3xl md:text-4xl font-bold text-blue-700 mb-2">{clientSatisfaction}%</div>
-              <div className="text-gray-600">Client Satisfaction</div>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+              <div className="text-center group">
+                <div className="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 group-hover:-translate-y-1">
+                  <div className="w-12 h-12 bg-brand-primary-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <Scissors className="w-6 h-6 text-brand-primary" />
+                  </div>
+                  <div className="text-3xl md:text-4xl font-bold text-brand-primary mb-2">{pashminasCrafted}+</div>
+                  <div className="text-gray-600 font-medium">Pashminas Crafted</div>
+                </div>
+              </div>
+              <div className="text-center group">
+                <div className="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 group-hover:-translate-y-1">
+                  <div className="w-12 h-12 bg-brand-primary-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <Palette className="w-6 h-6 text-brand-primary" />
+                  </div>
+                  <div className="text-3xl md:text-4xl font-bold text-brand-primary mb-2">{masterArtisans}+</div>
+                  <div className="text-gray-600 font-medium">Master Artisans</div>
+                </div>
+              </div>
+              <div className="text-center group">
+                <div className="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 group-hover:-translate-y-1">
+                  <div className="w-12 h-12 bg-brand-primary-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <Mountain className="w-6 h-6 text-brand-primary" />
+                  </div>
+                  <div className="text-3xl md:text-4xl font-bold text-brand-primary mb-2">{yearsHeritage}+</div>
+                  <div className="text-gray-600 font-medium">Years of Heritage</div>
+                </div>
+              </div>
+              <div className="text-center group">
+                <div className="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 group-hover:-translate-y-1">
+                  <div className="w-12 h-12 bg-brand-primary-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <Heart className="w-6 h-6 text-brand-primary" />
+                  </div>
+                  <div className="text-3xl md:text-4xl font-bold text-brand-primary mb-2">{globalClients}+</div>
+                  <div className="text-gray-600 font-medium">Global Clients</div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
       {/* Search and Filter Section */}
-      <section id="projects-section" className="py-12 bg-gray-50 border-b">
+      <section id="collections" className="py-16 bg-white">
         <div className="container mx-auto px-4">
           <div className="max-w-6xl mx-auto">
+            {/* Section Header */}
+            <div className="text-center mb-12">
+              <div className="inline-flex items-center gap-2 bg-brand-primary-50 rounded-full px-6 py-3 mb-6">
+                <Sparkles className="w-5 h-5 text-brand-primary-600" />
+                <span className="text-brand-primary-700 font-medium">Luxury Collections</span>
+              </div>
+              <h2 className="text-4xl md:text-5xl font-bold mb-6 text-gray-900">
+                Browse Our <span className="text-brand-primary">Exquisite</span> Gallery
+              </h2>
+              <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+                Each masterpiece is meticulously handcrafted by our skilled artisans using traditional techniques 
+                passed down through generations in the Himalayan valleys.
+              </p>
+            </div>
+
             {/* Search Bar */}
-            <div className="bg-white rounded-xl shadow-lg p-6 mb-6">
+            <div className="bg-gradient-to-r from-brand-primary-50 to-white rounded-2xl shadow-lg p-6 mb-8 border border-brand-primary-100">
               <form onSubmit={handleSearch} className="flex flex-col md:flex-row gap-4">
                 <div className="flex-1">
                   <div className="relative">
-                    <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+                    <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-brand-primary-400 w-5 h-5" />
                     <input
                       type="text"
-                      placeholder="Search projects by name, category, or client..."
+                      placeholder="Search our collections by name, style, or material..."
                       value={searchTerm}
                       onChange={(e) => setSearchTerm(e.target.value)}
-                      className="w-full pl-12 pr-4 py-4 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-lg"
+                      className="w-full pl-12 pr-4 py-4 border border-brand-primary-200 rounded-xl focus:ring-2 focus:ring-brand-primary-300 focus:border-brand-primary-300 text-lg bg-white/80 backdrop-blur-sm"
                     />
                   </div>
                 </div>
@@ -295,7 +373,7 @@ const Projects = () => {
                     type="button"
                     variant="outline"
                     onClick={() => setShowFilters(!showFilters)}
-                    className="flex items-center gap-2 px-6 py-4"
+                    className="flex items-center gap-2 px-6 py-4 border-brand-primary-200 text-brand-primary hover:bg-brand-primary-50"
                   >
                     <Filter className="w-4 h-4" />
                     Filters
@@ -322,8 +400,8 @@ const Projects = () => {
                           onClick={() => setSelectedCategory(id)}
                           className={`flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-all ${
                             selectedCategory === id
-                              ? 'bg-blue-600 text-white shadow-lg'
-                              : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                              ? 'bg-brand-primary text-white shadow-lg'
+                              : 'bg-brand-primary-50 text-brand-primary-700 hover:bg-brand-primary-100'
                           }`}
                         >
                           <Icon className="w-4 h-4" />
@@ -341,8 +419,8 @@ const Projects = () => {
                         onClick={() => setShowFeaturedOnly(!showFeaturedOnly)}
                         className={`w-full flex items-center justify-between p-3 rounded-lg border transition-all ${
                           showFeaturedOnly
-                            ? 'bg-yellow-50 border-yellow-300 text-yellow-700'
-                            : 'bg-white border-gray-200 text-gray-700 hover:bg-gray-50'
+                            ? 'bg-brand-primary-50 border-brand-primary-300 text-brand-primary-700'
+                            : 'bg-white border-brand-primary-200 text-gray-700 hover:bg-brand-primary-50'
                         }`}
                       >
                         <div className="flex items-center gap-2">
@@ -357,13 +435,13 @@ const Projects = () => {
                       <div className="flex gap-2">
                         <button
                           onClick={() => setViewMode('grid')}
-                          className={`flex-1 p-2 rounded ${viewMode === 'grid' ? 'bg-blue-100 text-blue-700' : 'bg-gray-100 text-gray-600'}`}
+                          className={`flex-1 p-2 rounded ${viewMode === 'grid' ? 'bg-brand-primary-100 text-brand-primary-700' : 'bg-gray-100 text-gray-600'}`}
                         >
                           Grid
                         </button>
                         <button
                           onClick={() => setViewMode('list')}
-                          className={`flex-1 p-2 rounded ${viewMode === 'list' ? 'bg-blue-100 text-blue-700' : 'bg-gray-100 text-gray-600'}`}
+                          className={`flex-1 p-2 rounded ${viewMode === 'list' ? 'bg-brand-primary-100 text-brand-primary-700' : 'bg-gray-100 text-gray-600'}`}
                         >
                           List
                         </button>
@@ -390,11 +468,11 @@ const Projects = () => {
             <div className="flex justify-between items-center mb-6">
               <div>
                 <p className="text-gray-600">
-                  Showing <span className="font-semibold text-gray-900">{projects.length}</span> project{projects.length !== 1 ? 's' : ''}
+                  Showing <span className="font-semibold text-gray-900">{projects.length}</span> masterpiece{projects.length !== 1 ? 's' : ''}
                   {selectedCategory !== 'all' && (
-                    <> in <span className="font-semibold text-blue-600">{categories.find(c => c.id === selectedCategory)?.name}</span></>
+                    <> in <span className="font-semibold text-brand-primary">{categories.find(c => c.id === selectedCategory)?.name}</span></>
                   )}
-                  {showFeaturedOnly && <span className="text-yellow-600"> (Featured)</span>}
+                  {showFeaturedOnly && <span className="text-brand-primary-600"> (Featured)</span>}
                 </p>
               </div>
             </div>
@@ -402,8 +480,8 @@ const Projects = () => {
         </div>
       </section>
 
-      {/* Projects Section */}
-      <section className="py-16 bg-white">
+      {/* Masterpieces Gallery Section */}
+      <section className="py-20 bg-gradient-to-b from-white to-brand-primary-50">
         <div className="container mx-auto px-4">
           {loading || error ? (
             <div className={viewMode === 'grid' 
@@ -420,13 +498,13 @@ const Projects = () => {
             </div>
           ) : projects.length === 0 ? (
             <div className="text-center py-16">
-              <div className="bg-gray-50 border border-gray-200 rounded-xl p-12 max-w-lg mx-auto">
-                <Building className="w-16 h-16 text-gray-400 mx-auto mb-6" />
-                <h3 className="text-2xl font-semibold text-gray-900 mb-4">No Projects Found</h3>
+              <div className="bg-gradient-to-br from-brand-primary-50 to-white border border-brand-primary-200 rounded-2xl p-12 max-w-lg mx-auto shadow-lg">
+                <Sparkles className="w-16 h-16 text-brand-primary-400 mx-auto mb-6" />
+                <h3 className="text-2xl font-semibold text-gray-900 mb-4">No Masterpieces Found</h3>
                 <p className="text-gray-600 mb-6 leading-relaxed">
                   {hasActiveFilters
-                    ? 'No projects match your current search criteria. Try adjusting your filters or search terms.'
-                    : 'We\'re currently updating our project portfolio. Please check back soon!'}
+                    ? 'No collections match your current search criteria. Try adjusting your filters or search terms.'
+                    : 'We\'re currently updating our luxury collection. Please check back soon for new masterpieces!'}
                 </p>
                 {hasActiveFilters && (
                   <Button onClick={clearFilters}>
@@ -444,10 +522,10 @@ const Projects = () => {
                 <Link
                   key={project.id}
                   href={`/projects/${generateSlug(project.title)}`}
-                  className={`group transition-all duration-300 ${
+                  className={`group transition-all duration-500 ${
                     viewMode === 'grid' 
-                      ? "block bg-white rounded-xl shadow-lg hover:shadow-2xl hover:-translate-y-2" 
-                      : "block bg-white rounded-xl shadow-lg hover:shadow-xl p-6 flex gap-6"
+                      ? "block bg-white rounded-2xl shadow-lg hover:shadow-2xl hover:-translate-y-3 border border-brand-primary-100 hover:border-brand-primary-200" 
+                      : "block bg-white rounded-2xl shadow-lg hover:shadow-xl p-6 flex gap-6 border border-brand-primary-100"
                   }`}
                 >
                   {viewMode === 'grid' ? (
@@ -464,8 +542,8 @@ const Projects = () => {
                             }}
                           />
                         ) : (
-                          <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-blue-100 to-blue-200">
-                            <Building className="w-16 h-16 text-blue-400" />
+                          <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-brand-primary-100 to-brand-primary-200">
+                            <Thread className="w-16 h-16 text-brand-primary-400" />
                           </div>
                         )}
                         
@@ -474,27 +552,27 @@ const Projects = () => {
                         
                         {/* Featured Badge */}
                         {project.featured && (
-                          <div className="absolute top-4 right-4 bg-yellow-400 text-yellow-900 px-3 py-1 rounded-full text-sm font-semibold flex items-center gap-1 shadow-lg">
+                          <div className="absolute top-4 right-4 bg-brand-primary text-white px-3 py-1 rounded-full text-sm font-semibold flex items-center gap-1 shadow-lg">
                             <Star className="w-3 h-3 fill-current" />
-                            Featured
+                            Premium
                           </div>
                         )}
 
                         {/* View Details Button */}
                         <div className="absolute bottom-4 left-4 right-4 transform translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">
-                          <div className="bg-white text-blue-700 hover:bg-blue-50 px-4 py-2 rounded-lg text-center font-medium flex items-center justify-center transition-colors">
+                          <div className="bg-white/95 backdrop-blur-sm text-brand-primary hover:bg-brand-primary hover:text-white px-4 py-2 rounded-xl text-center font-medium flex items-center justify-center transition-all duration-300 shadow-lg">
                             <ExternalLink className="w-4 h-4 mr-2" />
-                            View Project Details
+                            View Masterpiece
                           </div>
                         </div>
                       </div>
                       <div className="p-6">
                         <div className="flex items-center gap-2 mb-3">
-                          <span className="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-sm font-medium">
+                          <span className="bg-brand-primary-100 text-brand-primary-700 px-3 py-1 rounded-full text-sm font-medium">
                             {project.category}
                           </span>
                         </div>
-                        <h3 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-blue-700 transition-colors line-clamp-2">
+                        <h3 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-brand-primary transition-colors line-clamp-2">
                           {project.title}
                         </h3>
                         <p className="text-gray-600 mb-4 line-clamp-3 leading-relaxed">
@@ -503,13 +581,13 @@ const Projects = () => {
                         <div className="space-y-2 text-sm text-gray-500">
                           {project.clientName && (
                             <div className="flex items-center gap-2">
-                              <User className="w-4 h-4 text-blue-400" />
-                              <span>{project.clientName}</span>
+                              <Heart className="w-4 h-4 text-brand-primary-400" />
+                              <span>Crafted for {project.clientName}</span>
                             </div>
                           )}
                           <div className="flex items-center gap-2">
-                            <Calendar className="w-4 h-4 text-blue-400" />
-                            <span>Completed {formatDate(project.completionDate)}</span>
+                            <Calendar className="w-4 h-4 text-brand-primary-400" />
+                            <span>Created {formatDate(project.completionDate)}</span>
                           </div>
                         </div>
                       </div>
@@ -575,22 +653,44 @@ const Projects = () => {
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="py-20 bg-blue-700">
-        <div className="container mx-auto px-4">
-          <div className="text-center max-w-3xl mx-auto text-white">
-            <h2 className="text-3xl md:text-4xl font-bold mb-6">
-              Ready to Start Your Next Project?
+      {/* Luxury CTA Section */}
+      <section className="py-24 bg-gradient-to-br from-brand-primary-800 to-brand-primary-900 relative overflow-hidden">
+        {/* Elegant background elements */}
+        <div className="absolute inset-0 opacity-10">
+          <div className="absolute top-10 left-10 w-64 h-64 border border-white/20 rounded-full"></div>
+          <div className="absolute bottom-10 right-10 w-48 h-48 border border-white/20 rounded-full"></div>
+          <div className="absolute top-1/2 left-1/3 w-32 h-32 border border-white/10 rounded-full"></div>
+        </div>
+        
+        <div className="container mx-auto px-4 relative z-10">
+          <div className="text-center max-w-4xl mx-auto text-white">
+            <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm rounded-full px-6 py-3 mb-6">
+              <Scissors className="w-5 h-5 text-brand-primary-300" />
+              <span className="text-brand-primary-200 font-medium">Bespoke Luxury</span>
+            </div>
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
+              Commission Your Own <br/>
+              <span className="text-brand-primary-300">Himalayan Masterpiece</span>
             </h2>
-            <p className="text-xl text-blue-100 mb-8">
-              Let's discuss how we can bring your vision to life with our expertise and dedication.
+            <p className="text-xl md:text-2xl text-white/90 mb-10 font-light leading-relaxed max-w-3xl mx-auto">
+              Experience the ultimate in luxury with a custom-crafted Pashmina creation. 
+              Our master artisans will weave your vision into an heirloom of extraordinary beauty.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button className="bg-yellow-500 hover:bg-yellow-600 text-blue-900 font-semibold px-8 py-3">
-                Get Free Consultation
+              <Button 
+                href="/contact"
+                className="bg-brand-primary text-white hover:bg-brand-primary-dark font-semibold px-10 py-4 text-lg shadow-lg hover:shadow-xl"
+              >
+                <Heart className="w-5 h-5 mr-2 text-white" />
+                <span className="text-white">Commission Custom Piece</span>
               </Button>
-              <Button variant="outline" className="border-white text-white hover:bg-white hover:text-blue-700 px-8 py-3">
-                View All Services
+              <Button 
+                href="/services"
+                variant="outline" 
+                className="border-white/30 text-white hover:bg-white/10 px-10 py-4 text-lg font-medium"
+              >
+                <Mountain className="w-5 h-5 mr-2" />
+                Visit Our Heritage Atelier
               </Button>
             </div>
           </div>

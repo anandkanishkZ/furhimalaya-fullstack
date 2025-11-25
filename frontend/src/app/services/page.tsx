@@ -181,10 +181,10 @@ export default function Services() {
               <Button 
                 href="#process" 
                 variant="primary" 
-                className="bg-white text-brand-primary hover:bg-brand-primary-50 px-8 py-4 text-lg font-medium"
+                className="bg-brand-primary hover:bg-brand-primary-dark text-white px-8 py-4 text-lg font-medium shadow-lg hover:shadow-xl"
               >
-                Discover Our Process
-                <ArrowRight className="ml-2 w-5 h-5" />
+                <span className="text-white">Discover Our Process</span>
+                <ArrowRight className="ml-2 w-5 h-5 text-white" />
               </Button>
               <Button 
                 href="/products" 
@@ -445,7 +445,7 @@ export default function Services() {
               <Button 
                 href="/products" 
                 variant="primary" 
-                className="bg-white text-brand-primary hover:bg-brand-primary-50 px-8 py-4 text-lg font-medium"
+                className="bg-brand-primary-900 text-white hover:bg-brand-primary-800 px-8 py-4 text-lg font-medium shadow-lg hover:shadow-xl"
               >
                 Explore Our Collection
               </Button>
