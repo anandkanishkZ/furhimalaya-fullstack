@@ -1,0 +1,23 @@
+User-agent: *
+
+# Only allow public content - don't reveal internal structure
+Allow: /
+Allow: /projects/
+Allow: /services/
+Allow: /about/
+Allow: /contact/
+Allow: /blog/
+
+# Generic disallows - don't specify actual paths
+Disallow: /private/
+Disallow: /internal/
+Disallow: /restricted/
+Disallow: /_*
+Disallow: /temp/
+Disallow: /cache/
+
+# Crawl delay
+Crawl-delay: 1
+
+# Sitemaps
+Sitemap: https://forevershine.com.np/sitemap.xml

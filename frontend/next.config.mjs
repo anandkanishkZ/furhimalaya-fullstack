@@ -15,6 +15,9 @@ const nextConfig = {
     deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
     minimumCacheTTL: 2592000, // 30 days cache
+    dangerouslyAllowSVG: true,
+    contentDispositionType: 'attachment',
+    contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
     domains: ['images.unsplash.com', 'localhost', 'forevershine.com.np', 'www.forevershine.com.np', 'api.forevershine.com.np'],
     remotePatterns: [
       // Development - localhost
@@ -61,6 +64,18 @@ const nextConfig = {
         protocol: 'https',
         hostname: 'www.forevershine.com.np',
         pathname: '/api/media/serve/**',
+      },
+      // Unsplash images
+      {
+        protocol: 'https',
+        hostname: 'images.unsplash.com',
+        pathname: '/photo-*',
+      },
+      // Additional external image sources (fallback)
+      {
+        protocol: 'https',
+        hostname: '*.unsplash.com',
+        pathname: '**',
       },
     ],
   },

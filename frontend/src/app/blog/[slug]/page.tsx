@@ -9,6 +9,16 @@ import SocialShareButtons from '@/components/SocialShareButtons';
 import RichTextContent from '@/components/RichTextContent';
 import { getValidImageUrl } from '@/utils/media';
 
+// Generate static params for static export
+export async function generateStaticParams() {
+  // For static export, provide some sample blog posts to pre-generate
+  return [
+    { slug: 'art-of-traditional-pashmina-weaving' },
+    { slug: 'himalayan-heritage-craftsmanship' },
+    { slug: 'master-artisan-stories' }
+  ];
+}
+
 interface BlogPostPageProps {
   params: { slug: string };
 }
@@ -322,4 +332,5 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 }
 
 // Force dynamic rendering for this page
-export const dynamic = 'force-dynamic';
+// Static generation enabled for export
+// export const dynamic = 'force-dynamic';

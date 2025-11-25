@@ -81,16 +81,36 @@ export default function HeroSlider() {
     return () => clearInterval(timer);
   }, [slides.length]);
 
-  // Track slide view
+  // Track slide view with better error handling
   useEffect(() => {
     if (slides.length > 0 && slides[currentSlide]?.id) {
-      // Track view for analytics
-      fetch(`/api/hero-slides/${slides[currentSlide].id}`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      }).catch(err => console.error('Error tracking view:', err));
+      // Only track for non-default slides and if API is available
+      const slideId = slides[currentSlide].id;
+      if (slideId && !slideId.startsWith('default-')) {
+        // Track view for analytics with timeout and error handling
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 5000); // 5 second timeout
+        
+        fetch(`/api/hero-slides/${slideId}`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          signal: controller.signal,
+        })
+        .then(response => {
+          clearTimeout(timeoutId);
+          if (!response.ok && response.status !== 404) {
+            console.warn(`Hero slide tracking failed: ${response.status}`);
+          }
+        })
+        .catch(err => {
+          clearTimeout(timeoutId);
+          if (err.name !== 'AbortError') {
+            console.debug('Hero slide tracking unavailable:', err.message);
+          }
+        });
+      }
     }
   }, [currentSlide, slides]);
 
@@ -122,24 +142,39 @@ export default function HeroSlider() {
     return match ? match[1] : null;
   };
 
-  // Handle button click tracking
+  // Handle button click tracking with improved error handling
   const handleButtonClick = async (slideId: string, url: string) => {
-    try {
-      // Track click for analytics
-      if (slideId && slideId !== 'default-1' && slideId !== 'default-2' && slideId !== 'default-3') {
-        await fetch(`/api/hero-slides/${slideId}/track-click`, {
-          method: 'POST'
-        });
-      }
-    } catch (error) {
-      console.error('Error tracking click:', error);
-    }
-    
-    // Navigate to URL
+    // Navigate first for better UX
     if (url.startsWith('/')) {
       window.location.href = url;
     } else if (url.startsWith('http')) {
       window.open(url, '_blank');
+    }
+    
+    // Track click asynchronously (non-blocking)
+    if (slideId && !slideId.startsWith('default-')) {
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 3000); // 3 second timeout
+      
+      fetch(`/api/hero-slides/${slideId}/track-click`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        signal: controller.signal,
+      })
+      .then(response => {
+        clearTimeout(timeoutId);
+        if (!response.ok && response.status !== 404) {
+          console.warn(`Hero slide click tracking failed: ${response.status}`);
+        }
+      })
+      .catch(err => {
+        clearTimeout(timeoutId);
+        if (err.name !== 'AbortError') {
+          console.debug('Hero slide click tracking unavailable:', err.message);
+        }
+      });
     }
   };
 

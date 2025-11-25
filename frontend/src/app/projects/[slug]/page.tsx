@@ -4,6 +4,17 @@ import { notFound } from 'next/navigation';
 import ProjectDetailClient from '@/components/ProjectDetailClient';
 import publicApiClient, { Project } from '@/utils/publicApiClient';
 
+// Generate static params for static export
+export async function generateStaticParams() {
+  // For static export, provide some sample projects to pre-generate
+  return [
+    { slug: 'heritage-collection' },
+    { slug: 'artisan-showcase' },
+    { slug: 'luxury-pashmina' },
+    { slug: 'traditional-weaving' }
+  ];
+}
+
 interface ProjectDetailPageProps {
   params: {
     slug: string;
@@ -89,6 +100,7 @@ const ProjectDetailPage = ({ params }: ProjectDetailPageProps) => {
 };
 
 // Force dynamic rendering for this page
-export const dynamic = 'force-dynamic';
+// Static generation enabled for export
+// export const dynamic = 'force-dynamic';
 
 export default ProjectDetailPage;

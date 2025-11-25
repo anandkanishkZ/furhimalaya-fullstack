@@ -58,26 +58,39 @@ class BlogApiClient {
 
       const url = `${this.baseUrl}/public${searchParams.toString() ? `?${searchParams.toString()}` : ''}`;
       
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 second timeout
+      
       const response = await fetch(url, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
         },
         cache: 'no-store', // Ensure fresh data
-        next: { revalidate: 0 } // Disable caching in Next.js
+        next: { revalidate: 0 }, // Disable caching in Next.js
+        signal: controller.signal
       });
+      
+      clearTimeout(timeoutId);
 
       if (!response.ok) {
+        if (response.status === 429) {
+          console.warn('Blog API rate limit exceeded, using fallback data');
+        } else if (response.status >= 500) {
+          console.warn(`Blog API server error: ${response.status}`);
+        } else {
+          console.warn(`Blog API client error: ${response.status}`);
+        }
         throw new Error(`HTTP error! status: ${response.status}`);
       }
 
       return await response.json();
     } catch (error) {
-      console.error('Error fetching published posts:', error);
+      console.debug('Blog API unavailable:', error instanceof Error ? error.message : 'Unknown error');
       // Return empty data instead of throwing during build
       return {
         success: false,
-        message: 'Failed to fetch blog posts',
+        message: 'Blog service temporarily unavailable',
         data: []
       };
     }
@@ -85,24 +98,35 @@ class BlogApiClient {
 
   async getPostBySlug(slug: string): Promise<BlogPostResponse> {
     try {
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 second timeout
+      
       const response = await fetch(`${this.baseUrl}/public/${slug}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
         },
         cache: 'no-store', // Ensure fresh data
-        next: { revalidate: 0 } // Disable caching in Next.js
+        next: { revalidate: 0 }, // Disable caching in Next.js
+        signal: controller.signal
       });
+      
+      clearTimeout(timeoutId);
 
       if (!response.ok) {
+        if (response.status === 429) {
+          console.warn(`Blog post rate limit exceeded for slug: ${slug}`);
+        } else if (response.status === 404) {
+          console.warn(`Blog post not found: ${slug}`);
+        }
         throw new Error(`HTTP error! status: ${response.status}`);
       }
 
       return await response.json();
     } catch (error) {
-      console.error('Error fetching blog post by slug:', error);
-      // Return error response instead of throwing during build
-      throw error; // Re-throw for proper error handling in components
+      console.debug(`Blog post unavailable (${slug}):`, error instanceof Error ? error.message : 'Unknown error');
+      // Re-throw for proper error handling in components
+      throw error;
     }
   }
 

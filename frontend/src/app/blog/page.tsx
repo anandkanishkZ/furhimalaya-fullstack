@@ -48,7 +48,8 @@ async function getBlogPosts(): Promise<{ featured: BlogPost | null; regular: Blo
 }
 
 // Force dynamic rendering for this page to handle API calls properly
-export const dynamic = 'force-dynamic';
+// Static generation enabled for export
+// export const dynamic = 'force-dynamic';
 
 export default async function BlogPage() {
   const { featured, regular } = await getBlogPosts();
